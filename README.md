@@ -183,8 +183,8 @@ Released under the [MIT License](https://opensource.org/licenses/MIT).
 [build]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/build.yml?branch=main&label=build&logo=github
 [ci]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/ci.yml?branch=main&label=ci&logo=github
 [docker]: https://www.docker.com/
-[official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/alpine?label=official%20size&logo=docker
+[official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/official?label=official%20size&logo=docker
 [tags]: https://hub.docker.com/r/dstmodders/imagemagick/tags
 [terraria]: https://terraria.org/
-[tshock size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/debian?label=tshock%20size&logo=docker
+[tshock size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/tshock?label=tshock%20size&logo=docker
 [tshock]: https://github.com/Pryaxis/TShock

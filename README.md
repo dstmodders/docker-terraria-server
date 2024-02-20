@@ -1,5 +1,15 @@
 # docker-terraria-server
 
+[![Official Size]](https://hub.docker.com/r/dstmodders/terraria-server)
+[![TShock Size]](https://hub.docker.com/r/dstmodders/terraria-server)
+[![CI]](https://github.com/dstmodders/docker-terraria-server/actions/workflows/ci.yml)
+[![Build]](https://github.com/dstmodders/docker-terraria-server/actions/workflows/build.yml)
+
+## Supported tags and respective `Dockerfile` links
+
+- [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/fb8a0b4981d9bd1c211741cdc8511cc857273dd9/official/Dockerfile)
+- [`1.4.4.9-tshock-5.2.0`, `1.4.4.9-tshock`, `tshock-5.2.0`, `5.2.0`, `tshock`](https://github.com/dstmodders/docker-terraria-server/blob/fb8a0b4981d9bd1c211741cdc8511cc857273dd9/tshock/Dockerfile)
+
 ## Overview
 
 [Docker] images for the [Terraria] game servers, including official and
@@ -55,11 +65,11 @@ ones to simplify the mounting process.
 
 ```shell
 # for official
-$ docker run --rm -it -v "$(pwd):/data/" dstmodders/terraria-server \
+$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server \
     ./TerrariaServer.bin.x86_64 -config /data/config.txt
 
 # for tshock
-$ docker run --rm -it -v "$(pwd):/data/" dstmodders/terraria-server:tshock \
+$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
     ./TShock.Server \
       -configpath /data/tshock/ \
       -crashdir /data/tshock/crashes/ \
@@ -72,11 +82,11 @@ $ docker run --rm -it -v "$(pwd):/data/" dstmodders/terraria-server:tshock \
 
 ```cmd
 REM for official
-> docker run --rm -it -v "%CD%:/data/" dstmodders/terraria-server \
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server \
     ./TerrariaServer.bin.x86_64 -config /data/config.txt
 
 REM for tshock
-> docker run --rm -it -v "%CD%:/data/" dstmodders/terraria-server:tshock \
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
     ./TShock.Server \
       -configpath /data/tshock/ \
       -crashdir /data/tshock/crashes/ \
@@ -89,11 +99,11 @@ REM for tshock
 
 ```powershell
 # for official
-PS:\> docker run --rm -it -v "${PWD}:/data/" dstmodders/terraria-server \
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server \
     ./TerrariaServer.bin.x86_64 -config /data/config.txt
 
 # for tshock
-PS:\> docker run --rm -it -v "${PWD}:/data/" dstmodders/terraria-server:tshock \
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
     ./TShock.Server \
       -configpath /data/tshock/ \
       -crashdir /data/tshock/crashes/ \
@@ -170,7 +180,11 @@ $ docker build ./tshock/ --tag='dstmodders/terraria-server:tshock'
 
 Released under the [MIT License](https://opensource.org/licenses/MIT).
 
+[build]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/build.yml?branch=main&label=build&logo=github
+[ci]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/ci.yml?branch=main&label=ci&logo=github
 [docker]: https://www.docker.com/
+[official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/alpine?label=official%20size&logo=docker
 [tags]: https://hub.docker.com/r/dstmodders/imagemagick/tags
 [terraria]: https://terraria.org/
+[tshock size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/debian?label=tshock%20size&logo=docker
 [tshock]: https://github.com/Pryaxis/TShock

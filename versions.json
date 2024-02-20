@@ -1,0 +1,16 @@
+{
+  "official": [
+    {
+      "terraria_version": "1.4.4.9",
+      "terraria_latest": true
+    }
+  ],
+  "tshock": [
+    {
+      "terraria_version": "1.4.4.9",
+      "terraria_latest": true,
+      "tshock_version": "5.2.0",
+      "tshock_latest": true
+    }
+  ]
+}

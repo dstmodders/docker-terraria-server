@@ -7,8 +7,8 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/fb8a0b4981d9bd1c211741cdc8511cc857273dd9/official/Dockerfile)
-- [`1.4.4.9-tshock-5.2.0`, `1.4.4.9-tshock`, `tshock-5.2.0`, `5.2.0`, `tshock`](https://github.com/dstmodders/docker-terraria-server/blob/fb8a0b4981d9bd1c211741cdc8511cc857273dd9/tshock/Dockerfile)
+- [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/926050f134e9fbe340f12bd484342b3a671a2337/official/Dockerfile)
+- [`1.4.4.9-tshock-5.2.0`, `1.4.4.9-tshock`, `tshock-5.2.0`, `5.2.0`, `tshock`](https://github.com/dstmodders/docker-terraria-server/blob/926050f134e9fbe340f12bd484342b3a671a2337/tshock/Dockerfile)
 
 ## Overview
 

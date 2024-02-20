@@ -1,0 +1,192 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'official/**'
+      - 'tshock/**'
+      - versions.json
+  workflow_dispatch:
+
+env:
+  SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+  SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      official: ${{ steps.set-matrix.outputs.official }}
+      tshock: ${{ steps.set-matrix.outputs.tshock }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Set matrix
+        id: set-matrix
+        run: |
+          JSON=$(cat ./versions.json)
+          echo "official=$(jq -cM .official <<< ${JSON})" >> $GITHUB_OUTPUT
+          echo "tshock=$(jq -cM .tshock <<< ${JSON})" >> $GITHUB_OUTPUT
+
+  official:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        image: ${{ fromJSON(needs.prepare.outputs.official) }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Send Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' }}
+        id: slack
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Terraria version: ${{ matrix.image.terraria_version }}
+          status: in-progress
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Prepare Docker meta for an image
+        uses: docker/metadata-action@v5
+        id: image-meta
+        with:
+          images: |
+            ${{ github.repository_owner }}/terraria-server
+            ghcr.io/${{ github.repository_owner }}/terraria-server
+          flavor: |
+            latest=${{ matrix.image.terraria_latest || 'false' }}
+          labels: |
+            maintainer=victor@popkov.me
+          tags: |
+            type=raw,value=${{ matrix.image.terraria_version }}-official
+            type=raw,value=${{ matrix.image.terraria_version }}
+            ${{ matrix.image.terraria_latest && 'type=raw,value=official' || '' }}
+            ${{ matrix.image.terraria_latest && 'type=raw,value=official' || '' }}
+      - name: Build an image
+        uses: docker/build-push-action@v5
+        id: image
+        with:
+          build-args: |
+            TERRARIA_VERSION=${{ matrix.image.terraria_version }}
+          cache-from: type=registry,ref=${{ github.repository_owner }}/terraria-server:${{ matrix.image.terraria_version }}-official
+          cache-to: type=inline
+          context: .
+          file: ./official/Dockerfile
+          labels: ${{ steps.image-meta.outputs.labels }}
+          platforms: linux/amd64
+          pull: true
+          push: ${{ !env.ACT && github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.image-meta.outputs.tags }}
+      - name: Update Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' && always() }}
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Terraria version: ${{ matrix.image.terraria_version }}
+          status: ${{ job.status }}
+          timestamp: ${{ steps.slack.outputs.slack-timestamp }}
+
+  tshock:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        image: ${{ fromJSON(needs.prepare.outputs.tshock) }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Send Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' }}
+        id: slack
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Terraria version: ${{ matrix.image.terraria_version }}
+            TShock version: ${{ matrix.image.tshock_version }}
+          status: in-progress
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Prepare Docker meta for an image
+        uses: docker/metadata-action@v5
+        id: image-meta
+        with:
+          images: |
+            ${{ github.repository_owner }}/terraria-server
+            ghcr.io/${{ github.repository_owner }}/terraria-server
+          labels: |
+            maintainer=victor@popkov.me
+          tags: |
+            type=raw,value=${{ matrix.image.terraria_version }}-tshock-${{ matrix.image.tshock_version }}
+            ${{ matrix.image.tshock_latest && format('type=raw,value={0}-tshock', matrix.image.terraria_version) || '' }}
+            ${{ matrix.image.terraria_latest && format('type=raw,value=tshock-{0}', matrix.image.tshock_version) || '' }}
+            ${{ matrix.image.terraria_latest && format('type=raw,value={0}', matrix.image.tshock_version) || '' }}
+            ${{ matrix.image.terraria_latest && matrix.image.tshock_latest && 'type=raw,value=tshock' || '' }}
+      - name: Build an image
+        uses: docker/build-push-action@v5
+        id: image
+        with:
+          build-args: |
+            TERRARIA_VERSION=${{ matrix.image.terraria_version }}
+          cache-from: type=registry,ref=${{ github.repository_owner }}/terraria-server:${{ matrix.image.terraria_version }}-tshock-${{ matrix.image.tshock_version }}
+          cache-to: type=inline
+          context: .
+          file: ./tshock/Dockerfile
+          labels: ${{ steps.image-meta.outputs.labels }}
+          platforms: linux/amd64
+          pull: true
+          push: ${{ !env.ACT && github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.image-meta.outputs.tags }}
+      - name: Update Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' && always() }}
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Terraria version: ${{ matrix.image.terraria_version }}
+            TShock version: ${{ matrix.image.tshock_version }}
+          status: ${{ job.status }}
+          timestamp: ${{ steps.slack.outputs.slack-timestamp }}

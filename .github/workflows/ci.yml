@@ -34,30 +34,55 @@ jobs:
             {STATUS}
             {REF}
             Node.js: ${{ steps.node.outputs.node-version }}
+            Hadolint issues: Checking...
             Prettier issues: Checking...
           status: in-progress
       - name: Install Prettier
         run: yarn global add prettier
-      - name: Lint
-        id: lint
+      - name: Lint using Prettier
+        run: prettier --check . || true
+      - name: Output Prettier results
+        id: prettier-output
+        run: echo "issues=$(prettier --list-different . | wc -l)" >> $GITHUB_OUTPUT
+      - name: Lint using Hadolint (official)
+        uses: hadolint/hadolint-action@v3.1.0
+        id: hadolint-official
+        with:
+          dockerfile: ./official/Dockerfile
+          no-fail: true
+      - name: Lint using Hadolint (tshock)
+        uses: hadolint/hadolint-action@v3.1.0
+        id: hadolint-tshock
+        with:
+          dockerfile: ./tshock/Dockerfile
+          no-fail: true
+      - name: Output Hadolint results
+        id: hadolint-output
         run: |
-          export_output() {
-            env=${1^^}
-            env=${env//-/_}
-            export "$env=$2"
-            echo "export $env=$2"
-            echo "$1=$2" >> $GITHUB_OUTPUT
-          }
+          official_issues="$(echo '${{ steps.hadolint-official.outputs.results }}' | sed '/^$/d' | sed '$!N; /^\n$/D' | wc -l)"
+          tshock_issues="$(echo '${{ steps.hadolint-tshock.outputs.results }}' | sed '/^$/d' | sed '$!N; /^\n$/D' | wc -l)"
 
-          # output
-          export_output 'prettier-issues' "$(prettier --list-different . | wc -l)"
+          echo "official-issues=$official_issues" >> $GITHUB_OUTPUT
+          echo "tshock-issues=$tshock_issues" >> $GITHUB_OUTPUT
+          echo "issues=$((official_issues + tshock_issues))" >> $GITHUB_OUTPUT
+      - name: Check results
+        run: |
+          hadolint_official_issues="${{ steps.hadolint-output.outputs.official-issues }}"
+          hadolint_tshock_issues="${{ steps.hadolint-output.outputs.tshock-issues }}"
+          hadolint_issues="${{ steps.hadolint-output.outputs.issues }}"
+          prettier_issues="${{ steps.prettier-output.outputs.issues }}"
 
-          # lint
-          echo '---'
-          prettier --check . || true
+          echo "Hadolint issues (official): $hadolint_official_issues"
+          echo "Hadolint issues (tshock): $hadolint_tshock_issues"
+          echo "Total Hadolint issues: $((hadolint_official_issues + hadolint_tshock_issues))"
+          echo "Total Prettier issues: $prettier_issues"
 
-          # status
-          if [ "$PRETTIER_ISSUES" -eq 0 ]; then exit 0; else exit 1; fi
+          exit_code=1
+          if [ "$prettier_issues" = '0' ] && [ "$hadolint_official_issues" = '0' ] && [ "$hadolint_tshock_issues" = '0' ]; then
+            exit_code=0
+          fi
+
+          exit "$exit_code"
       - name: Update Slack notification
         uses: codedsolar/slack-action@v1
         if: ${{ github.event_name != 'pull_request' && always() }}
@@ -66,6 +91,7 @@ jobs:
             {STATUS}
             {REF}
             Node.js: ${{ steps.node.outputs.node-version }}
-            Prettier issues: ${{ steps.lint.outputs.prettier-issues || 'Skipped' }}
+            Hadolint issues: ${{ steps.hadolint-output.outputs.issues || 'Skipped' }}
+            Prettier issues: ${{ steps.prettier-output.outputs.issues || 'Skipped' }}
           status: ${{ job.status }}
           timestamp: ${{ steps.slack.outputs.slack-timestamp }}

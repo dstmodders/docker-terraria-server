@@ -7,8 +7,8 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/a4cfbacf1a4e4f2929f7d811bca8dfe311053e3e/official/Dockerfile)
-- [`1.4.4.9-tshock-5.2.0`, `1.4.4.9-tshock`, `tshock-5.2.0`, `5.2.0`, `tshock`](https://github.com/dstmodders/docker-terraria-server/blob/a4cfbacf1a4e4f2929f7d811bca8dfe311053e3e/tshock/Dockerfile)
+- [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/43d8a19739b3f180152c984fbd597e4425a097eb/official/Dockerfile)
+- [`1.4.4.9-tshock-5.2.0`, `1.4.4.9-tshock`, `tshock-5.2.0`, `5.2.0`, `tshock`](https://github.com/dstmodders/docker-terraria-server/blob/43d8a19739b3f180152c984fbd597e4425a097eb/tshock/Dockerfile)
 
 ## Overview
 
@@ -50,17 +50,152 @@ See [tags] for a list of all available versions.
 $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 ```
 
+<details>
+<summary>The same, but with default environment variables.</summary>
+<p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
+    -e DISABLE_COLORS=0 \
+    -e TZ=UTC \
+    -e TERRARIA_AUTOCREATE=3 \
+    -e TERRARIA_BANLIST=/data/banlist.txt \
+    -e TERRARIA_DIFFICULTY=0 \
+    -e TERRARIA_LANGUAGE='en-US' \
+    -e TERRARIA_MAXPLAYERS=8 \
+    -e TERRARIA_MOTD='Please don’t cut the purple trees!' \
+    -e TERRARIA_NPCSTREAM=60 \
+    -e TERRARIA_PASSWORD='' \
+    -e TERRARIA_PORT=7777 \
+    -e TERRARIA_PRIORITY=1 \
+    -e TERRARIA_SECURE=1 \
+    -e TERRARIA_SEED='' \
+    -e TERRARIA_UPNP=1 \
+    -e TERRARIA_WORLD=/data/worlds/World.wld \
+    -e TERRARIA_WORLDNAME=World \
+    -e TERRARIA_WORLDPATH=/data/worlds/ \
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 \
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 \
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 \
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 \
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE='' \
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX='' \
+    -e TERRARIA_FORCEPRIORITY='' \
+    -e TERRARIA_IP='' \
+    -e TERRARIA_LOBBY='' \
+    -e TERRARIA_STEAM=0 \
+    dstmodders/terraria-server</pre></p>
+</details>
+
 #### CMD (Windows)
 
 ```cmd
 > docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server
 ```
 
+<details>
+<summary>The same, but with default environment variables.</summary>
+<p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
+    -e DISABLE_COLORS=0 ^
+    -e TZ=UTC ^
+    -e TERRARIA_AUTOCREATE=3 ^
+    -e TERRARIA_BANLIST=/data/banlist.txt ^
+    -e TERRARIA_DIFFICULTY=0 ^
+    -e TERRARIA_LANGUAGE="en-US" ^
+    -e TERRARIA_MAXPLAYERS=8 ^
+    -e TERRARIA_MOTD="Please don’t cut the purple trees!" ^
+    -e TERRARIA_NPCSTREAM=60 ^
+    -e TERRARIA_PASSWORD="" ^
+    -e TERRARIA_PORT=7777 ^
+    -e TERRARIA_PRIORITY=1 ^
+    -e TERRARIA_SECURE=1 ^
+    -e TERRARIA_SEED="" ^
+    -e TERRARIA_UPNP=1 ^
+    -e TERRARIA_WORLD=/data/worlds/World.wld ^
+    -e TERRARIA_WORLDNAME=World ^
+    -e TERRARIA_WORLDPATH=/data/worlds/ ^
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 ^
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE="" ^
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX="" ^
+    -e TERRARIA_FORCEPRIORITY="" ^
+    -e TERRARIA_IP="" ^
+    -e TERRARIA_LOBBY="" ^
+    -e TERRARIA_STEAM=0 ^
+    dstmodders/terraria-server</pre></p>
+</details>
+
 #### PowerShell (Windows)
 
 ```powershell
 PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server
 ```
+
+<details>
+<summary>The same, but with default environment variables.</summary>
+<p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
+    -e DISABLE_COLORS=0 `
+    -e TZ=UTC `
+    -e TERRARIA_AUTOCREATE=3 `
+    -e TERRARIA_BANLIST=/data/banlist.txt `
+    -e TERRARIA_DIFFICULTY=0 `
+    -e TERRARIA_LANGUAGE='en-US' `
+    -e TERRARIA_MAXPLAYERS=8 `
+    -e TERRARIA_MOTD="Please don’t cut the purple trees!" `
+    -e TERRARIA_NPCSTREAM=60 `
+    -e TERRARIA_PASSWORD='' `
+    -e TERRARIA_PORT=7777 `
+    -e TERRARIA_PRIORITY=1 `
+    -e TERRARIA_SECURE=1 `
+    -e TERRARIA_SEED='' `
+    -e TERRARIA_UPNP=1 `
+    -e TERRARIA_WORLD=/data/worlds/World.wld `
+    -e TERRARIA_WORLDNAME=World `
+    -e TERRARIA_WORLDPATH=/data/worlds/ `
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 `
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 `
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 `
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 `
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE='' `
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX='' `
+    -e TERRARIA_FORCEPRIORITY='' `
+    -e TERRARIA_IP='' `
+    -e TERRARIA_LOBBY='' `
+    -e TERRARIA_STEAM=0 `
+    dstmodders/terraria-server</pre></p>
+</details>
 
 #### Docker Compose
 
@@ -80,9 +215,12 @@ services:
     volumes:
       - './test/official/:/data/:rw'
     environment:
+      # system parameters
+      DISABLE_COLORS: 0
+      TZ: UTC
       # general parameters
       TERRARIA_AUTOCREATE: 3
-      TERRARIA_BANLIST: '/data/banlist.txt'
+      TERRARIA_BANLIST: /data/banlist.txt
       TERRARIA_DIFFICULTY: 0
       TERRARIA_LANGUAGE: 'en-US'
       TERRARIA_MAXPLAYERS: 8
@@ -94,9 +232,9 @@ services:
       TERRARIA_SECURE: 1
       TERRARIA_SEED: ''
       TERRARIA_UPNP: 1
-      TERRARIA_WORLD: '/data/worlds/World.wld'
+      TERRARIA_WORLD: /data/worlds/World.wld
       TERRARIA_WORLDNAME: World
-      TERRARIA_WORLDPATH: '/data/worlds/'
+      TERRARIA_WORLDPATH: /data/worlds/
       # journey parameters
       TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN: 2
       TERRARIA_JOURNEYPERMISSION_GODMODE: 2
@@ -160,24 +298,24 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 #### CMD (Windows)
 
 ```cmd
-> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
-    ./TShock.Server \
-      -configpath /data/tshock/ \
-      -crashdir /data/tshock/crashes/ \
-      -logpath /data/tshock/logs/ \
-      -additionalplugins /data/plugins/ \
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock ^
+    ./TShock.Server ^
+      -configpath /data/tshock/ ^
+      -crashdir /data/tshock/crashes/ ^
+      -logpath /data/tshock/logs/ ^
+      -additionalplugins /data/plugins/ ^
       -worldselectpath /data/worlds/
 ```
 
 #### PowerShell (Windows)
 
 ```powershell
-PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
-    ./TShock.Server \
-      -configpath /data/tshock/ \
-      -crashdir /data/tshock/crashes/ \
-      -logpath /data/tshock/logs/ \
-      -additionalplugins /data/plugins/ \
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock `
+    ./TShock.Server `
+      -configpath /data/tshock/ `
+      -crashdir /data/tshock/crashes/ `
+      -logpath /data/tshock/logs/ `
+      -additionalplugins /data/plugins/ `
       -worldselectpath /data/worlds/
 ```
 
@@ -217,6 +355,7 @@ exclusive to the system.
 
 | Name                      | Image                    | Default   | Description              |
 | ------------------------- | ------------------------ | --------- | ------------------------ |
+| `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output   |
 | `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version   |
 | `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version |
 | `TZ`                      | `official`<br />`tshock` | `UTC`     | Sets the timezone.       |

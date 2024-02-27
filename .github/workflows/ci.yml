@@ -23,8 +23,6 @@ jobs:
         id: node
         with:
           node-version: 20.11.1
-      - name: Enable corepack
-        run: corepack enable
       - name: Send Slack notification
         uses: codedsolar/slack-action@v1
         if: ${{ github.event_name != 'pull_request' }}
@@ -37,6 +35,8 @@ jobs:
             Hadolint issues: Checking...
             Prettier issues: Checking...
           status: in-progress
+      - name: Enable corepack
+        run: corepack enable
       - name: Install Prettier
         run: yarn global add prettier
       - name: Lint using Prettier
@@ -81,7 +81,6 @@ jobs:
           if [ "$prettier_issues" = '0' ] && [ "$hadolint_official_issues" = '0' ] && [ "$hadolint_tshock_issues" = '0' ]; then
             exit_code=0
           fi
-
           exit "$exit_code"
       - name: Update Slack notification
         uses: codedsolar/slack-action@v1
@@ -93,5 +92,59 @@ jobs:
             Node.js: ${{ steps.node.outputs.node-version }}
             Hadolint issues: ${{ steps.hadolint-output.outputs.issues || 'Skipped' }}
             Prettier issues: ${{ steps.prettier-output.outputs.issues || 'Skipped' }}
+          status: ${{ job.status }}
+          timestamp: ${{ steps.slack.outputs.slack-timestamp }}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Send Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' }}
+        id: slack
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Passed Bats tests: Testing...
+          status: in-progress
+      - name: Install Bats
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats
+      - name: Test using Bats
+        id: bats
+        run: |
+          output="$(bats ./official/entrypoint/)"
+          tests_passed="$(echo "$output" | grep -c '^ok')"
+          tests_total="$(bats -c ./official/entrypoint/)"
+
+          echo "$output"
+          echo "output=$bats_output" >> $GITHUB_OUTPUT
+          echo "tests-passed=$tests_passed" >> $GITHUB_OUTPUT
+          echo "tests-total=$tests_total" >> $GITHUB_OUTPUT
+      - name: Check results
+        run: |
+          tests_passed="${{ steps.bats.outputs.tests-passed }}"
+          tests_total="${{ steps.bats.outputs.tests-total }}"
+
+          echo "Passed Bats tests: $tests_passed"
+          echo "Total Bats tests: $tests_total"
+
+          exit_code=1
+          if [ "$tests_passed" = "$tests_total" ]; then
+            exit_code=0
+          fi
+          exit "$exit_code"
+      - name: Update Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' && always() }}
+        with:
+          fields: |
+            {STATUS}
+            {REF}
+            Passed Bats tests: ${{ steps.bats.outputs.tests-passed || '-' }} / ${{ steps.bats.outputs.tests-total || '-' }}
           status: ${{ job.status }}
           timestamp: ${{ steps.slack.outputs.slack-timestamp }}

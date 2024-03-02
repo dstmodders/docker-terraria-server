@@ -9,7 +9,7 @@ fi
 
 print_bold() {
   value="$1"
-  if [ "$DISABLE_COLORS" = '1' ]; then
+  if [ "$DISABLE_COLORS" = '1' ] || ! [ -t 0 ]; then
     printf "%s" "$value"
   else
     printf "$(tput bold)%s$(tput sgr0)" "$value"
@@ -18,7 +18,7 @@ print_bold() {
 
 print_bold_red() {
   value="$1"
-  if [ "$DISABLE_COLORS" = '1' ]; then
+  if [ "$DISABLE_COLORS" = '1' ] || ! [ -t 0 ]; then
     printf "%s" "$value"
   else
     printf "$(tput bold)$(tput setaf 1)%s$(tput sgr0)" "$value"

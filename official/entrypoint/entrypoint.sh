@@ -460,6 +460,12 @@ if [ "$start_server" -eq 1 ]; then
   echo "Configuration: $config"
   echo "Command: /opt/terraria/TerrariaServer.bin.x86_64 $args"
 
+  if [ -t 0 ]; then
+    echo "TTY mode: enabled"
+  else
+    echo "TTY mode: disabled"
+  fi
+
   printf '\n'
   print_parameters
   echo '---'

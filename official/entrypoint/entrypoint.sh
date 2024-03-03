@@ -10,8 +10,13 @@ fi
 . "$functions_dirname/print_functions.sh"
 . "$functions_dirname/validate_functions.sh"
 
-args='-config /data/config.txt'
+# paths
+binary='/opt/terraria/TerrariaServer.bin.x86_64'
 config='/data/config.txt'
+
+# general
+args="-config $config"
+binary_basename="$(basename $binary)"
 journey_permissions='journeypermission_biomespread_setfrozen
 journeypermission_godmode
 journeypermission_increaseplacementrange
@@ -38,7 +43,7 @@ pt-BR
 pl-PL'
 start_server=0
 
-# parameters with their default values
+# server parameters with their default values
 # https://terraria.fandom.com/wiki/Server#Server_config_file
 autocreate="$TERRARIA_AUTOCREATE"
 banlist="$TERRARIA_BANLIST"
@@ -431,8 +436,7 @@ while [ $# -gt 0 ]; do
       seed="$value"
       shift 2
       ;;
-    /opt/terraria/TerrariaServer.bin.x86_64) start_server=1; shift ;;
-    ./TerrariaServer.bin.x86_64)
+    "./$binary_basename")
       if [ "$(pwd)" = '/opt/terraria' ]; then
         start_server=1
         shift
@@ -441,10 +445,9 @@ while [ $# -gt 0 ]; do
         exec "$@"
       fi
       ;;
-    TerrariaServer.bin.x86_64) start_server=1; shift ;;
-    '')
-      start_server=1
-      ;;
+    "$binary") start_server=1; shift ;;
+    "$binary_basename") start_server=1; shift ;;
+    '') start_server=1 ;;
     *)
       save_config
       exec "$@"
@@ -458,7 +461,7 @@ if [ "$start_server" -eq 1 ]; then
   echo "Terraria version: $TERRARIA_VERSION"
   echo "Working directory: $(pwd)/"
   echo "Configuration: $config"
-  echo "Command: /opt/terraria/TerrariaServer.bin.x86_64 $args"
+  echo "Command: $binary $args"
 
   if [ -t 0 ]; then
     echo "TTY mode: enabled"
@@ -470,5 +473,5 @@ if [ "$start_server" -eq 1 ]; then
   print_parameters
   echo '---'
   # shellcheck disable=SC2086
-  exec /opt/terraria/TerrariaServer.bin.x86_64 $args
+  exec "$binary" $args
 fi

@@ -13,10 +13,16 @@ fi
 # paths
 binary='/opt/terraria/TerrariaServer.bin.x86_64'
 config='/data/config.txt'
+datafile='/tmp/datafile'
+input_fifo='/tmp/input'
+lockfile='/tmp/lockfile'
+output_fifo='/tmp/output'
 
 # general
 args="-config $config"
 binary_basename="$(basename $binary)"
+capture_input_pid=''
+capture_output_pid=''
 journey_permissions='journeypermission_biomespread_setfrozen
 journeypermission_godmode
 journeypermission_increaseplacementrange
@@ -42,6 +48,7 @@ zh-Hans
 pt-BR
 pl-PL'
 start_server=0
+tmux_session="terraria"
 
 # server parameters with their default values
 # https://terraria.fandom.com/wiki/Server#Server_config_file
@@ -83,6 +90,18 @@ forcepriority="$TERRARIA_FORCEPRIORITY"
 ip="$TERRARIA_IP"
 lobby="$TERRARIA_LOBBY"
 steam="$TERRARIA_STEAM"
+
+lock() {
+#  echo 'Locking...'
+  while ! ln -s $$ "$lockfile" 2> /dev/null; do
+    sleep 1
+  done
+}
+
+unlock() {
+#  echo 'Unlocking...'
+  rm "$lockfile" > /dev/null 2>&1 || true
+}
 
 validate_known_parameter() {
   case "$1" in
@@ -326,6 +345,84 @@ worldname=$worldname
 worldpath=$worldpath" >> "$config"
 }
 
+capture_input() {
+  while true; do
+    read -r input < "$input_fifo"
+    tmux send-keys -t "$tmux_session" "$input" Enter > /dev/null 2>&1
+  done
+}
+
+capture_output() {
+  boms_found=0
+  while read -r line; do
+    lock
+
+    # remove BOMs
+    if [ "$boms_found" -eq 0 ]; then
+      result=''
+
+      i=1
+      length=$(printf '%s' "$line" | wc -c)
+      while [ "$i" -le "$length" ]; do
+        char=$(printf '%s' "$line" | cut -c "$i")
+        ascii=$(printf '%d' "'$char")
+        if [ "$ascii" -eq 239 ] && [ "$(printf '%d' "'$(printf '%s' "$line" | cut -c "$((i+1))")")" -eq 187 ] && [ "$(printf '%d' "'$(printf '%s' "$line" | cut -c "$((i+2))")")" -eq 191 ]; then
+          i=$((i + 3))
+          continue
+        fi
+        boms_found=1
+        i=$((i + 1))
+        result="$result$char"
+      done
+
+      if [ -n "$result" ]; then
+        line="$result"
+      fi
+
+      if [ "$boms_found" -eq 1 ]; then
+        boms_found=1
+      fi
+    fi
+
+#    line="$(echo "$line" | sed 's/\xef\xbb\xbf//g')" # \357\273\277 (BOM)
+    line="$(echo "$line" | sed 's/\x1B\[6n//g')" # \33[6n (request cursor position)
+    line="$(echo "$line" | sed 's/\x1B\]0;//g')" # \33]0; (set terminal window title)
+    line="$(echo "$line" | sed 's/\x1B\[[0-9;]*[HJ]//g')" # \33[H\33[2J (clear)
+#    line="$(echo "$line" | sed 's/\x1B\[[0-9;]*[mGK]//g')" # \33[?1h\33=
+
+    echo "$line"
+
+    start_input="$(cat "$datafile")"
+    if [ "$start_input" -eq 0 ] && echo "$line" | grep -q ': Server started'; then
+      echo '1' > "$datafile"
+#      start_input=1
+#      echo "start_input is $start_input (background)"
+    fi
+
+#    i=1
+#    length=$(printf '%s' "$line" | wc -c)
+#    while [ "$i" -le "$length" ]; do
+#      char=$(printf '%s' "$line" | cut -c "$i")
+#      ascii=$(printf '%d' "'$char")
+#      printf "Character: %s, ASCII Code: %d\n" "$char" "$ascii"
+#      i=$((i + 1))
+#    done
+
+    unlock
+  done < "$output_fifo"
+}
+
+cleanup() {
+  printf '\n---\nCleaning up...\n'
+  if tmux has-session -t "$tmux_session" 2> /dev/null; then
+    tmux kill-session -t "$tmux_session"
+  fi
+  kill -TERM "$capture_input_pid" > /dev/null 2>&1
+  kill -TERM "$capture_output_pid" > /dev/null 2>&1
+  rm -Rf "$datafile" "$lockfile"
+  exit 0
+}
+
 while [ $# -gt 0 ]; do
   key="$1"
   value="$2"
@@ -472,6 +569,57 @@ if [ "$start_server" -eq 1 ]; then
   printf '\n'
   print_parameters
   echo '---'
-  # shellcheck disable=SC2086
-  exec "$binary" $args
+
+  mkfifo "$input_fifo"
+  mkfifo "$output_fifo"
+
+  # start the input capture in the background
+  capture_input &
+  capture_input_pid="$!"
+
+  echo "0" > "$datafile"
+  trap 'cleanup' INT TERM
+
+  if [ -t 0 ]; then
+    # start the output capture in the background
+    capture_output &
+    capture_output_pid="$!"
+
+    tmux new-session -d -s "$tmux_session" "$binary $args"
+    tmux pipe-pane -o -t "$tmux_session" "tee $output_fifo"
+
+    start_input=0
+    while tmux wait -S "$tmux_session" > /dev/null 2>&1; do
+      lock
+
+      if [ "$start_input" -eq 0 ]; then
+        start_input="$(cat "$datafile")"
+      fi
+
+#      echo "start_input is $start_input (foreground)"
+      if [ "$start_input" -eq 1 ]; then
+#        printf ': '
+        IFS= read -r line
+        unlock
+#        printf '\033[1A\033[2K'
+        echo "$line" >> "$input_fifo"
+
+        command="$line"
+        command="${command#"${command%%[![:space:]]*}"}"
+        command="${command%"${command##*[![:space:]]}"}"
+
+        if [ "$command" = 'exit' ] || [ "$command" = 'exit-nosave' ]; then
+          while tmux has-session -t "$tmux_session" 2>/dev/null; do
+            sleep 1
+          done
+        fi
+      fi
+
+      unlock
+    done
+  else
+    tmux new-session -d -s "$tmux_session" "$binary $args"
+    tmux pipe-pane -o -t "$tmux_session" "tee $output_fifo"
+    capture_output
+  fi
 fi

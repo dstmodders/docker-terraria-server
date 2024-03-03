@@ -59,6 +59,7 @@ RUN groupadd --gid 1000 terraria \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
     ca-certificates="20230311" \
+    tmux="3.3a-3" \
     unzip="6.0-28" \
     wget="1.21.3-1+b2" \
   # change timezone

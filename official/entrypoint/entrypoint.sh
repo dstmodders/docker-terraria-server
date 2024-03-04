@@ -590,8 +590,6 @@ if [ "$start_server" -eq 1 ]; then
 
     start_input=0
     while tmux wait -S "$tmux_session" > /dev/null 2>&1; do
-      lock
-
       if [ "$start_input" -eq 0 ]; then
         start_input="$(cat "$datafile")"
       fi
@@ -600,7 +598,6 @@ if [ "$start_server" -eq 1 ]; then
       if [ "$start_input" -eq 1 ]; then
 #        printf ': '
         IFS= read -r line
-        unlock
 #        printf '\033[1A\033[2K'
         echo "$line" >> "$input_fifo"
 
@@ -614,8 +611,6 @@ if [ "$start_server" -eq 1 ]; then
           done
         fi
       fi
-
-      unlock
     done
   else
     tmux new-session -d -s "$tmux_session" "$binary $args"

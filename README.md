@@ -51,7 +51,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 ```
 
 <details>
-<summary>The same, but with default environment variables.</summary>
+<summary><b>The same, but with default environment variables</b></summary>
 <p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
     -e DISABLE_COLORS=0 \
     -e TZ=UTC \
@@ -102,7 +102,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 ```
 
 <details>
-<summary>The same, but with default environment variables.</summary>
+<summary><b>The same, but with default environment variables</b></summary>
 <p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
     -e DISABLE_COLORS=0 ^
     -e TZ=UTC ^
@@ -153,7 +153,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 ```
 
 <details>
-<summary>The same, but with default environment variables.</summary>
+<summary><b>The same, but with default environment variables</b></summary>
 <p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
     -e DISABLE_COLORS=0 `
     -e TZ=UTC `

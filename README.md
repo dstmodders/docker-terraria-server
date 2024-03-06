@@ -33,6 +33,11 @@ community [TShock] variants, emphasizing pure vanilla experience by default.
 > directory: `/home/terraria/.local/share/Terraria/Worlds/`. We have changed the
 > default path to `/data/worlds/` instead to simplify the mounting process.
 
+- [Docker Run (official)](#docker-run-official)
+- [Docker Compose (official)](#docker-compose-official)
+
+#### Docker Run (official)
+
 To pull the latest official server:
 
 ```shell
@@ -44,7 +49,7 @@ $ docker pull ghcr.io/dstmodders/terraria-server:latest
 > [!TIP]
 > See [tags] for a list of all available versions.
 
-#### Shell/Bash (Linux & macOS)
+##### Shell/Bash (Linux & macOS)
 
 ```shell
 $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
@@ -95,7 +100,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
     dstmodders/terraria-server</pre></p>
 </details>
 
-#### CMD (Windows)
+##### CMD (Windows)
 
 ```cmd
 > docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server
@@ -146,7 +151,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
     dstmodders/terraria-server</pre></p>
 </details>
 
-#### PowerShell (Windows)
+##### PowerShell (Windows)
 
 ```powershell
 PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server
@@ -197,7 +202,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
     dstmodders/terraria-server</pre></p>
 </details>
 
-#### Docker Compose
+#### Docker Compose (official)
 
 > [!NOTE]
 > The provided environment variables are all optional, as they use the default
@@ -271,6 +276,11 @@ services:
 > planning to change the default paths to simplify the mounting process, just
 > like we did with the official one.
 
+- [Docker Run (tshock)](#docker-run-tshock)
+- [Docker Compose (tshock)](#docker-compose-tshock)
+
+#### Docker Run (tshock)
+
 To pull the latest community [TShock] server:
 
 ```shell
@@ -286,7 +296,7 @@ In the examples below, we will override the default [TShock] paths using the
 corresponding command-line parameters to store all the necessary data in a
 single `/data/` directory, as for now, we don't override them by default.
 
-#### Shell/Bash (Linux & macOS)
+##### Shell/Bash (Linux & macOS)
 
 ```shell
 $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
@@ -298,7 +308,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
       -worldselectpath /data/worlds/
 ```
 
-#### CMD (Windows)
+##### CMD (Windows)
 
 ```cmd
 > docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock ^
@@ -310,7 +320,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
       -worldselectpath /data/worlds/
 ```
 
-#### PowerShell (Windows)
+##### PowerShell (Windows)
 
 ```powershell
 PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock `
@@ -322,7 +332,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
       -worldselectpath /data/worlds/
 ```
 
-#### Docker Compose
+#### Docker Compose (tshock)
 
 ```yaml
 version: '3.7'

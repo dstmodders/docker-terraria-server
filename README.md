@@ -208,12 +208,14 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 version: '3.7'
 
 services:
-  official:
+  terraria:
     image: 'dstmodders/terraria-server:latest'
+    stdin_open: true
+    tty: true
     ports:
       - '7777:7777'
     volumes:
-      - './test/official/:/data/:rw'
+      - './data/:/data/:rw'
     environment:
       # system parameters
       DISABLE_COLORS: 0

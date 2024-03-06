@@ -453,7 +453,7 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     -motd)
-      validate_required_parameter "$key" "$value" 'motd value' "-motd 'Please don’t cut the purple trees!'"
+      validate_required_parameter "$key" "$value" 'motd value' "-motd 'Please don\'t cut the purple trees!'"
       start_server=1
       motd="$value"
       shift 2

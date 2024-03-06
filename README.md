@@ -60,7 +60,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
     -e TERRARIA_DIFFICULTY=0 \
     -e TERRARIA_LANGUAGE='en-US' \
     -e TERRARIA_MAXPLAYERS=8 \
-    -e TERRARIA_MOTD='Please don’t cut the purple trees!' \
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" \
     -e TERRARIA_NPCSTREAM=60 \
     -e TERRARIA_PASSWORD='' \
     -e TERRARIA_PORT=7777 \
@@ -111,7 +111,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
     -e TERRARIA_DIFFICULTY=0 ^
     -e TERRARIA_LANGUAGE="en-US" ^
     -e TERRARIA_MAXPLAYERS=8 ^
-    -e TERRARIA_MOTD="Please don’t cut the purple trees!" ^
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" ^
     -e TERRARIA_NPCSTREAM=60 ^
     -e TERRARIA_PASSWORD="" ^
     -e TERRARIA_PORT=7777 ^
@@ -162,7 +162,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
     -e TERRARIA_DIFFICULTY=0 `
     -e TERRARIA_LANGUAGE='en-US' `
     -e TERRARIA_MAXPLAYERS=8 `
-    -e TERRARIA_MOTD="Please don’t cut the purple trees!" `
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" `
     -e TERRARIA_NPCSTREAM=60 `
     -e TERRARIA_PASSWORD='' `
     -e TERRARIA_PORT=7777 `
@@ -226,7 +226,7 @@ services:
       TERRARIA_DIFFICULTY: 0
       TERRARIA_LANGUAGE: 'en-US'
       TERRARIA_MAXPLAYERS: 8
-      TERRARIA_MOTD: 'Please don’t cut the purple trees!'
+      TERRARIA_MOTD: "Please don't cut the purple trees!"
       TERRARIA_NPCSTREAM: 60
       TERRARIA_PASSWORD: ''
       TERRARIA_PORT: 7777
@@ -378,7 +378,7 @@ are primarily set through the configuration file instead.
 | `TERRARIA_DIFFICULTY` | `official` | `0`                                  | <p>Sets the world difficulty when using `autocreate`. Options:</p><ul><li>`0` (normal)</li><li>`1` (expert)</li><li>`2` (master)</li><li>`3` (journey)</li></ul>                                                                                                                                                              |
 | `TERRARIA_LANGUAGE`   | `official` | `en-US`                              | <p>Sets the server language from its language code. Available codes:</p><ul><li>`en-US` (English)</li><li>`de-DE` (German)</li><li>`it-IT` (Italian)</li><li>`fr-FR` (French)</li><li>`es-ES` (Spanish)</li><li>`ru-RU` (Russian)</li><li>`zh-Hans` (Chinese)</li><li>`pt-BR` (Portuguese)</li><li>`pl-PL` (Polish)</li></ul> |
 | `TERRARIA_MAXPLAYERS` | `official` | `8`                                  | Sets the max number of players allowed on a server. Value must be between `1` and `255`.                                                                                                                                                                                                                                      |
-| `TERRARIA_MOTD`       | `official` | `Please don’t cut the purple trees!` | Sets the message of the day.                                                                                                                                                                                                                                                                                                  |
+| `TERRARIA_MOTD`       | `official` | `Please don't cut the purple trees!` | Sets the message of the day.                                                                                                                                                                                                                                                                                                  |
 | `TERRARIA_NPCSTREAM`  | `official` | `60`                                 | Reduces enemy skipping but increases bandwidth usage. The lower the number the less skipping will happen, but more data is sent. `0` is off.                                                                                                                                                                                  |
 | `TERRARIA_PASSWORD`   | `official` |                                      | Sets the server password.                                                                                                                                                                                                                                                                                                     |
 | `TERRARIA_PORT`       | `official` | `7777`                               | Sets the port number.                                                                                                                                                                                                                                                                                                         |

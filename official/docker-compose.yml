@@ -19,7 +19,7 @@ services:
       TERRARIA_DIFFICULTY: 0
       TERRARIA_LANGUAGE: 'en-US'
       TERRARIA_MAXPLAYERS: 8
-      TERRARIA_MOTD: 'Please don’t cut the purple trees!'
+      TERRARIA_MOTD: "Please don't cut the purple trees!"
       TERRARIA_NPCSTREAM: 60
       TERRARIA_PASSWORD: ''
       TERRARIA_PORT: 7777

@@ -31,8 +31,7 @@ community [TShock] variants, emphasizing pure vanilla experience by default.
 > [!IMPORTANT]
 > By default, the official [Terraria] server stores worlds in the home
 > directory: `/home/terraria/.local/share/Terraria/Worlds/`. We have changed the
-> default path to `/data/worlds/` instead to simplify the mounting process. Make
-> sure to mount your host directory or volume to preserve data.
+> default path to `/data/worlds/` instead to simplify the mounting process.
 
 To pull the latest official server:
 
@@ -42,7 +41,8 @@ $ docker pull dstmodders/terraria-server:latest
 $ docker pull ghcr.io/dstmodders/terraria-server:latest
 ```
 
-See [tags] for a list of all available versions.
+> [!TIP]
+> See [tags] for a list of all available versions.
 
 #### Shell/Bash (Linux & macOS)
 
@@ -199,7 +199,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 
 #### Docker Compose
 
-> [!TIP]
+> [!NOTE]
 > The provided environment variables are all optional, as they use the default
 > values. We've added them to our example just so that you wouldn't have to dig
 > for them in [supported environment variables](#supported-environment-variables).
@@ -279,7 +279,8 @@ $ docker pull dstmodders/terraria-server:tshock
 $ docker pull ghcr.io/dstmodders/terraria-server:tshock
 ```
 
-See [tags] for a list of all available versions.
+> [!TIP]
+> See [tags] for a list of all available versions.
 
 In the examples below, we will override the default [TShock] paths using the
 corresponding command-line parameters to store all the necessary data in a

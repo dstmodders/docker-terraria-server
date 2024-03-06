@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  terraria:
+    image: 'dstmodders/terraria-server:tshock'
+    command: >
+      ./TShock.Server \
+      -configpath /data/tshock/ \
+      -crashdir /data/tshock/crashes/ \
+      -logpath /data/tshock/logs/ \
+      -additionalplugins /data/plugins/ \
+      -worldselectpath /data/worlds/
+    stdin_open: true
+    tty: true
+    ports:
+      - '7777:7777'
+      - '7878:7878' # REST API
+    volumes:
+      - './data/:/data/:rw'

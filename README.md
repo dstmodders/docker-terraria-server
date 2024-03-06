@@ -327,20 +327,22 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 version: '3.7'
 
 services:
-  tshock:
+  terraria:
     image: 'dstmodders/terraria-server:tshock'
-    command:
-      - ./TShock.Server
-      - '-configpath /data/tshock/'
-      - '-crashdir /data/tshock/crashes/'
-      - '-logpath /data/tshock/logs/'
-      - '-additionalplugins /data/plugins/'
-      - '-worldselectpath /data/worlds/'
+    command: >
+      ./TShock.Server \
+      -configpath /data/tshock/ \
+      -crashdir /data/tshock/crashes/ \
+      -logpath /data/tshock/logs/ \
+      -additionalplugins /data/plugins/ \
+      -worldselectpath /data/worlds/
+    stdin_open: true
+    tty: true
     ports:
       - '7777:7777'
       - '7878:7878' # REST API
     volumes:
-      - './test/tshock/:/data/:rw'
+      - './data/:/data/:rw'
 ```
 
 ## Supported environment variables

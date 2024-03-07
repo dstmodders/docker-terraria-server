@@ -15,11 +15,70 @@
 [Docker] images for the [Terraria] game servers, including official and
 community [TShock] variants, emphasizing pure vanilla experience by default.
 
+- [Quickstart](#quickstart)
 - [Usage](#usage)
 - [Supported environment variables](#supported-environment-variables)
 - [Supported architectures](#supported-architectures)
 - [Supported build arguments](#supported-build-arguments)
 - [Build](#build)
+
+## Quickstart
+
+To begin, the simplest method is to clone this repository and execute
+[Docker Compose] from within either the `official` or `tshock` directory. This
+will automatically handle the pulling, creation, and mounting of all necessary
+components for you:
+
+### Step 1/4. Clone the repository and move into the corresponding directory
+
+For [Official](#official) server:
+
+```shell
+$ git clone https://github.com/dstmodders/docker-terraria-server.git
+$ cd ./docker-terraria-server/official/
+```
+
+For [TShock](#tshock) server, we also need to create the corresponding data
+directories:
+
+```shell
+$ git clone https://github.com/dstmodders/docker-terraria-server.git
+$ cd ./docker-terraria-server/tshock/
+$ mkdir -p ./data/tshock/crashes/ ./data/tshock/logs/ ./data/plugins/ ./data/worlds/
+```
+
+### Step 2/4. Start the server
+
+```shell
+$ docker compose up
+```
+
+All the server data, including the world and server settings, will be stored
+within the `./data/` directory.
+
+### Step 3/4. Attach to send server commands
+
+```shell
+$ docker compose attach terraria
+```
+
+> [!TIP]
+> To detach, use <kbd>CTRL</kbd> + <kbd>P</kbd> and then <kbd>CTRL</kbd> +
+> <kbd>Q</kbd>.
+
+### Step 4/4. Stop the server
+
+```shell
+$ docker compose down
+```
+
+Once you've tested everything successfully, you can move the example
+`./docker-compose.yml` into any directory of your choice and edit it according
+to your specific needs. Remember to also move the `./data/` directory if you
+wish to preserve your existing world and server settings.
+
+For more detailed usage instructions, continue reading the next [Usage](#usage)
+chapter.
 
 ## Usage
 
@@ -475,6 +534,7 @@ Released under the [MIT License](https://opensource.org/licenses/MIT).
 
 [build]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/build.yml?branch=main&label=build&logo=github
 [ci]: https://img.shields.io/github/actions/workflow/status/dstmodders/docker-terraria-server/ci.yml?branch=main&label=ci&logo=github
+[docker compose]: https://docs.docker.com/compose/
 [docker]: https://www.docker.com/
 [official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/official?label=official%20size&logo=docker
 [tags]: https://hub.docker.com/r/dstmodders/terraria-server/tags

@@ -31,15 +31,14 @@ components for you:
 
 ### Step 1/4. Clone the repository and move into the corresponding directory
 
-For [Official](#official) server:
+For [Official] server:
 
 ```shell
 $ git clone https://github.com/dstmodders/docker-terraria-server.git
 $ cd ./docker-terraria-server/official/
 ```
 
-For [TShock](#tshock) server, we also need to create the corresponding data
-directories:
+For [TShock] server, we also need to create the corresponding data directories:
 
 ```shell
 $ git clone https://github.com/dstmodders/docker-terraria-server.git
@@ -82,8 +81,8 @@ chapter.
 
 ## Usage
 
-- [Official](#official)
-- [TShock](#tshock)
+- [Official]
+- [TShock]
 
 ### Official
 
@@ -259,6 +258,211 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
     -e TERRARIA_LOBBY='' `
     -e TERRARIA_STEAM=0 `
     dstmodders/terraria-server</pre></p>
+</details>
+
+> [!TIP]
+> To stop the container, use <kbd>CTRL</kbd> + <kbd>C</kbd>.
+
+The commands above will **run the server interactively in the foreground**,
+allowing you to send commands as you would normally do when running the server
+binary on your host. If you prefer to run it non-interactively in the
+background, you can simply _remove_ the `-it` flags and _add_ the `-d` flag
+instead to run it in the detached mode: `docker run -d`.
+
+Respectively, when running the server non-interactively in the background, you
+would also want to send commands non-interactively. For this purpose our
+container provides the following FIFO files for you to utilize:
+
+- `/tmp/input`
+- `/tmp/output`
+
+You can send your server commands to the `/tmp/input` file, where each line will
+be recognized by the server as user input. Regarding `/tmp/output`, it may not
+always be necessary, as you can typically read output from the standard `stdout`
+using `docker logs`. However, it can be useful if you plan to create custom
+scripts.
+
+The commands below will **run the server non-interactively in the background**.
+As an example, we'll also include instructions on **reading output and sending
+input non-interactively**.
+
+##### Shell/Bash (Linux & macOS)
+
+```shell
+$ docker run --rm --name=terraria -d -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server # start
+$ docker logs terraria # read output
+$ docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
+$ docker stop terraria # stop
+```
+
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>$ docker run --rm --name=terraria -d -v "$(pwd):/data/" -p 7777:7777 \
+    -e DISABLE_COLORS=0 \
+    -e TZ=UTC \
+    -e TERRARIA_AUTOCREATE=3 \
+    -e TERRARIA_BANLIST=/data/banlist.txt \
+    -e TERRARIA_DIFFICULTY=0 \
+    -e TERRARIA_LANGUAGE='en-US' \
+    -e TERRARIA_MAXPLAYERS=8 \
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" \
+    -e TERRARIA_NPCSTREAM=60 \
+    -e TERRARIA_PASSWORD='' \
+    -e TERRARIA_PORT=7777 \
+    -e TERRARIA_PRIORITY=1 \
+    -e TERRARIA_SECURE=1 \
+    -e TERRARIA_SEED='' \
+    -e TERRARIA_UPNP=1 \
+    -e TERRARIA_WORLD=/data/worlds/World.wld \
+    -e TERRARIA_WORLDNAME=World \
+    -e TERRARIA_WORLDPATH=/data/worlds/ \
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 \
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 \
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 \
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 \
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 \
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 \
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE='' \
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX='' \
+    -e TERRARIA_FORCEPRIORITY='' \
+    -e TERRARIA_IP='' \
+    -e TERRARIA_LOBBY='' \
+    -e TERRARIA_STEAM=0 \
+    dstmodders/terraria-server
+$ docker logs terraria # read output
+$ docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
+$ docker stop terraria # stop</pre></p>
+</details>
+
+##### CMD (Windows)
+
+```cmd
+REM start
+> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server
+REM read output
+> docker logs terraria
+REM send input
+> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
+REM stop
+> docker stop terraria
+```
+
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>REM start
+> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 ^
+    -e DISABLE_COLORS=0 ^
+    -e TZ=UTC ^
+    -e TERRARIA_AUTOCREATE=3 ^
+    -e TERRARIA_BANLIST=/data/banlist.txt ^
+    -e TERRARIA_DIFFICULTY=0 ^
+    -e TERRARIA_LANGUAGE="en-US" ^
+    -e TERRARIA_MAXPLAYERS=8 ^
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" ^
+    -e TERRARIA_NPCSTREAM=60 ^
+    -e TERRARIA_PASSWORD="" ^
+    -e TERRARIA_PORT=7777 ^
+    -e TERRARIA_PRIORITY=1 ^
+    -e TERRARIA_SECURE=1 ^
+    -e TERRARIA_SEED="" ^
+    -e TERRARIA_UPNP=1 ^
+    -e TERRARIA_WORLD=/data/worlds/World.wld ^
+    -e TERRARIA_WORLDNAME=World ^
+    -e TERRARIA_WORLDPATH=/data/worlds/ ^
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 ^
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 ^
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE="" ^
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX="" ^
+    -e TERRARIA_FORCEPRIORITY="" ^
+    -e TERRARIA_IP="" ^
+    -e TERRARIA_LOBBY="" ^
+    -e TERRARIA_STEAM=0 ^
+    dstmodders/terraria-server
+REM read output
+> docker logs terraria
+REM send input
+> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" REM send input
+REM stop
+> docker stop terraria REM stop</pre></p>
+</details>
+
+##### PowerShell (Windows)
+
+```powershell
+PS:\> docker run --rm --name=terraria -d -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server # start
+PS:\> docker logs terraria # read output
+PS:\> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
+PS:\> docker stop terraria # stop
+```
+
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>PS:\> docker run --rm --name=terraria -d -v "${PWD}:/data/" -p 7777:7777 `
+    -e DISABLE_COLORS=0 `
+    -e TZ=UTC `
+    -e TERRARIA_AUTOCREATE=3 `
+    -e TERRARIA_BANLIST=/data/banlist.txt `
+    -e TERRARIA_DIFFICULTY=0 `
+    -e TERRARIA_LANGUAGE='en-US' `
+    -e TERRARIA_MAXPLAYERS=8 `
+    -e TERRARIA_MOTD="Please don't cut the purple trees!" `
+    -e TERRARIA_NPCSTREAM=60 `
+    -e TERRARIA_PASSWORD='' `
+    -e TERRARIA_PORT=7777 `
+    -e TERRARIA_PRIORITY=1 `
+    -e TERRARIA_SECURE=1 `
+    -e TERRARIA_SEED='' `
+    -e TERRARIA_UPNP=1 `
+    -e TERRARIA_WORLD=/data/worlds/World.wld `
+    -e TERRARIA_WORLDNAME=World `
+    -e TERRARIA_WORLDPATH=/data/worlds/ `
+    -e TERRARIA_JOURNEYPERMISSION_BIOMESPREAD_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_GODMODE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_INCREASEPLACEMENTRANGE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_RAIN_SETSTRENGTH=2 `
+    -e TERRARIA_JOURNEYPERMISSION_SETDIFFICULTY=2 `
+    -e TERRARIA_JOURNEYPERMISSION_SETSPAWNRATE=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDAWN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETDUSK=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETMIDNIGHT=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETNOON=2 `
+    -e TERRARIA_JOURNEYPERMISSION_TIME_SETSPEED=2 `
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETFROZEN=2 `
+    -e TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2 `
+    -e TERRARIA_ANNOUNCEMENTBOXRANGE='' `
+    -e TERRARIA_DISABLEANNOUNCEMENTBOX='' `
+    -e TERRARIA_FORCEPRIORITY='' `
+    -e TERRARIA_IP='' `
+    -e TERRARIA_LOBBY='' `
+    -e TERRARIA_STEAM=0 `
+    dstmodders/terraria-server
+PS:\> docker logs terraria # read output
+PS:\> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
+PS:\> docker stop terraria # stop</pre></p>
 </details>
 
 #### Docker Compose (official)
@@ -537,7 +741,9 @@ Released under the [MIT License](https://opensource.org/licenses/MIT).
 [docker compose]: https://docs.docker.com/compose/
 [docker]: https://www.docker.com/
 [official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/official?label=official%20size&logo=docker
+[official]: #official
 [tags]: https://hub.docker.com/r/dstmodders/terraria-server/tags
 [terraria]: https://terraria.org/
 [tshock size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/tshock?label=tshock%20size&logo=docker
+[tshock]: #tshock
 [tshock]: https://github.com/Pryaxis/TShock

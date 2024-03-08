@@ -427,7 +427,8 @@ capture_output() {
 }
 
 cleanup() {
-  printf '\n---\nCleaning up...\n'
+  debug_echo '---'
+  debug_echo 'Cleaning up...'
   if tmux has-session -t "$tmux_session" 2> /dev/null; then
     tmux kill-session -t "$tmux_session"
   fi

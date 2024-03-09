@@ -5,6 +5,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TERRARIA_VERSION="1.4.4.9"
 ENV TERRARIA_VERSION="${TERRARIA_VERSION}"
 
+ENV DISABLE_COLORS=0
 ENV TZ="UTC"
 
 # general parameters

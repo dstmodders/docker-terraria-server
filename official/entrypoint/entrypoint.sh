@@ -618,20 +618,22 @@ done
 save_config
 
 if [ "$start_server" -eq 1 ]; then
-  echo "Terraria version: $TERRARIA_VERSION"
-  echo "Working directory: $(pwd)/"
-  echo "Configuration: $config"
-  echo "Command: $binary $args"
+  if [ "$DISABLE_SUMMARY" != '1' ]; then
+    echo "Terraria version: $TERRARIA_VERSION"
+    echo "Working directory: $(pwd)/"
+    echo "Configuration: $config"
+    echo "Command: $binary $args"
 
-  if [ -t 0 ]; then
-    echo "TTY mode: enabled"
-  else
-    echo "TTY mode: disabled"
+    if [ -t 0 ]; then
+      echo "TTY mode: enabled"
+    else
+      echo "TTY mode: disabled"
+    fi
+
+    printf '\n'
+    print_parameters
+    echo '---'
   fi
-
-  printf '\n'
-  print_parameters
-  echo '---'
 
   mkfifo "$input_fifo"
   mkfifo "$output_fifo"

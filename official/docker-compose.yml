@@ -12,6 +12,7 @@ services:
     environment:
       # system parameters
       DISABLE_COLORS: 0
+      DISABLE_SUMMARY: 0
       TZ: UTC
       # general parameters
       TERRARIA_AUTOCREATE: 3

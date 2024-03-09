@@ -487,6 +487,7 @@ services:
     environment:
       # system parameters
       DISABLE_COLORS: 0
+      DISABLE_SUMMARY: 0
       TZ: UTC
       # general parameters
       TERRARIA_AUTOCREATE: 3
@@ -631,12 +632,13 @@ services:
 System environment variables are unrelated to the [Terraria] server and are
 exclusive to the system.
 
-| Name                      | Image                    | Default   | Description              |
-| ------------------------- | ------------------------ | --------- | ------------------------ |
-| `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output   |
-| `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version   |
-| `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version |
-| `TZ`                      | `official`<br />`tshock` | `UTC`     | Sets the timezone.       |
+| Name                      | Image                    | Default   | Description                                               |
+| ------------------------- | ------------------------ | --------- | --------------------------------------------------------- |
+| `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output                                    |
+| `DISABLE_SUMMARY`         | `official`               | `0`       | Toggles configurations summary before starting the server |
+| `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version                                    |
+| `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version                                  |
+| `TZ`                      | `official`<br />`tshock` | `UTC`     | Sets the timezone.                                        |
 
 ### General
 

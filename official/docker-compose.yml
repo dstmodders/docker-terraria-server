@@ -11,6 +11,7 @@ services:
       - './data/:/data/:rw'
     environment:
       # system parameters
+      DEBUG_ENTRYPOINT: 0
       DISABLE_COLORS: 0
       DISABLE_SUMMARY: 0
       TZ: UTC

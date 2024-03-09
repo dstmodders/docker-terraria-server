@@ -23,7 +23,7 @@ args="-config $config"
 binary_basename="$(basename $binary)"
 capture_input_pid=''
 capture_output_pid=''
-debug=0
+debug="$DEBUG_ENTRYPOINT"
 journey_permissions='journeypermission_biomespread_setfrozen
 journeypermission_godmode
 journeypermission_increaseplacementrange
@@ -105,13 +105,13 @@ unlock() {
 }
 
 debug_echo() {
-  if [ "$debug" -eq 1 ]; then
+  if [ "$debug" = '1' ]; then
     echo "$@"
   fi
 }
 
 debug_printf() {
-  if [ "$debug" -eq 1 ]; then
+  if [ "$debug" = '1' ]; then
     # shellcheck disable=SC2059
     printf "$@"
   fi
@@ -439,7 +439,7 @@ capture_output() {
 }
 
 cleanup() {
-  if [ "$debug" -eq 1 ]; then
+  if [ "$debug" = '1' ]; then
     lock
   fi
 
@@ -471,7 +471,7 @@ cleanup() {
   wait "$capture_input_pid"
   wait "$capture_output_pid"
 
-  if [ "$debug" -eq 1 ]; then
+  if [ "$debug" = '1' ]; then
     unlock
   fi
 

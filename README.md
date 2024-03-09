@@ -486,6 +486,7 @@ services:
       - './data/:/data/:rw'
     environment:
       # system parameters
+      DEBUG_ENTRYPOINT: 0
       DISABLE_COLORS: 0
       DISABLE_SUMMARY: 0
       TZ: UTC
@@ -634,6 +635,7 @@ exclusive to the system.
 
 | Name                      | Image                    | Default   | Description                                               |
 | ------------------------- | ------------------------ | --------- | --------------------------------------------------------- |
+| `DEBUG_ENTRYPOINT`        | `official`               | `0`       | Toggles debug messages in the entrypoint                  |
 | `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output                                    |
 | `DISABLE_SUMMARY`         | `official`               | `0`       | Toggles configurations summary before starting the server |
 | `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version                                    |

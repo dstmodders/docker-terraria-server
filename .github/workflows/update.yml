@@ -1,0 +1,42 @@
+name: Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - DOCKERHUB.md
+  workflow_dispatch:
+
+env:
+  SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+  SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+
+jobs:
+  dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Send Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' }}
+        id: slack
+        with:
+          status: in-progress
+      - name: Update Docker Hub repository overview
+        uses: peter-evans/dockerhub-description@v3
+        if: ${{ !env.ACT }}
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: ${{ github.repository_owner }}/terraria-server
+          short-description: Terraria official and TShock servers.
+          readme-filepath: ./DOCKERHUB.md
+      - name: Update Slack notification
+        uses: codedsolar/slack-action@v1
+        if: ${{ github.event_name != 'pull_request' && always() }}
+        with:
+          status: ${{ job.status }}
+          timestamp: ${{ steps.slack.outputs.slack-timestamp }}

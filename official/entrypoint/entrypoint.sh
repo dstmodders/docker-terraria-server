@@ -19,7 +19,7 @@ lockfile='/tmp/lockfile'
 output_fifo='/tmp/output'
 
 # general
-args="-config $config"
+args=''
 binary_basename="$(basename $binary)"
 capture_input_pid=''
 capture_output_pid=''
@@ -302,6 +302,8 @@ save_config() {
   fi
 
   # add command-line parameters
+  args="-config $config"
+
   if [ -n "$announcementboxrange" ]; then
     args="$args -announcementboxrange $announcementboxrange"
   fi

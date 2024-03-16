@@ -12,7 +12,6 @@ fi
 
 # paths
 binary='/opt/terraria/TerrariaServer.bin.x86_64'
-config='/data/config.txt'
 datafile='/tmp/datafile'
 input_fifo='/tmp/input'
 lockfile='/tmp/lockfile'
@@ -86,6 +85,7 @@ worldname="$TERRARIA_WORLDNAME"
 worldpath="$TERRARIA_WORLDPATH"
 
 announcementboxrange="$TERRARIA_ANNOUNCEMENTBOXRANGE"
+config="$TERRARIA_CONFIG"
 disableannouncementbox="$TERRARIA_DISABLEANNOUNCEMENTBOX"
 forcepriority="$TERRARIA_FORCEPRIORITY"
 ip="$TERRARIA_IP"

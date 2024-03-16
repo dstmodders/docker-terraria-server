@@ -160,6 +160,7 @@ services:
       TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH: 2
       # command-line parameters
       TERRARIA_ANNOUNCEMENTBOXRANGE: ''
+      TERRARIA_CONFIG: /data/config.txt
       TERRARIA_DISABLEANNOUNCEMENTBOX: ''
       TERRARIA_FORCEPRIORITY: ''
       TERRARIA_IP: ''
@@ -329,14 +330,15 @@ through the server configuration file.
 Command-line environment variables represent features unique to [Terraria]
 server binary parameters.
 
-| Name                              | Image      | Default | Description                                                                                                                                                                                                                                                    |
-| --------------------------------- | ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TERRARIA_ANNOUNCEMENTBOXRANGE`   | `official` |         | Sets the "Announcement Box" text messaging range in pixels, `-1` for serverwide announcements.                                                                                                                                                                 |
-| `TERRARIA_DISABLEANNOUNCEMENTBOX` | `official` |         | Disables the text announcements that "Announcement Box" makes when pulsed from wire.                                                                                                                                                                           |
-| `TERRARIA_FORCEPRIORITY`          | `official` |         | <p>Sets the process priority for this task:</p><ul><li>`0` (realtime)</li><li>`1` (high)</li><li>`2` (above normal)</li><li>`3` (normal)</li><li>`4` (below normal)</li><li>`5` (idle)</li></ul><p>If this is used the `priority` setting will be ignored.</p> |
-| `TERRARIA_IP`                     | `official` |         | Sets the IP address for the server to listen on.                                                                                                                                                                                                               |
-| `TERRARIA_LOBBY`                  | `official` |         | <p>Allows only friends to join the server or sets it to private if Steam is enabled:</p><ul><li>`friends`</li><li>`private`</li></ul>                                                                                                                          |
-| `TERRARIA_STEAM`                  | `official` | `0`     | Toggles Steam support.                                                                                                                                                                                                                                         |
+| Name                              | Image      | Default            | Description                                                                                                                                                                                                                                                    |
+| --------------------------------- | ---------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TERRARIA_ANNOUNCEMENTBOXRANGE`   | `official` |                    | Sets the "Announcement Box" text messaging range in pixels, `-1` for serverwide announcements.                                                                                                                                                                 |
+| `TERRARIA_CONFIG`                 | `official` | `/data/config.txt` | Sets the configuration file path.                                                                                                                                                                                                                              |
+| `TERRARIA_DISABLEANNOUNCEMENTBOX` | `official` |                    | Disables the text announcements that "Announcement Box" makes when pulsed from wire.                                                                                                                                                                           |
+| `TERRARIA_FORCEPRIORITY`          | `official` |                    | <p>Sets the process priority for this task:</p><ul><li>`0` (realtime)</li><li>`1` (high)</li><li>`2` (above normal)</li><li>`3` (normal)</li><li>`4` (below normal)</li><li>`5` (idle)</li></ul><p>If this is used the `priority` setting will be ignored.</p> |
+| `TERRARIA_IP`                     | `official` |                    | Sets the IP address for the server to listen on.                                                                                                                                                                                                               |
+| `TERRARIA_LOBBY`                  | `official` |                    | <p>Allows only friends to join the server or sets it to private if Steam is enabled:</p><ul><li>`friends`</li><li>`private`</li></ul>                                                                                                                          |
+| `TERRARIA_STEAM`                  | `official` | `0`                | Toggles Steam support.                                                                                                                                                                                                                                         |
 
 ## Supported architectures
 

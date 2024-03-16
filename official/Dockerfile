@@ -49,6 +49,7 @@ ENV TERRARIA_JOURNEYPERMISSION_WIND_SETSTRENGTH=2
 # command-line parameters
 # https://terraria.fandom.com/wiki/Server#Command_line_parameters
 ENV TERRARIA_ANNOUNCEMENTBOXRANGE=""
+ENV TERRARIA_CONFIG="/data/config.txt"
 ENV TERRARIA_DISABLEANNOUNCEMENTBOX=""
 ENV TERRARIA_FORCEPRIORITY=""
 ENV TERRARIA_IP=""
@@ -103,4 +104,4 @@ WORKDIR /opt/terraria/
 EXPOSE 7777
 
 ENTRYPOINT ["/opt/entrypoint/entrypoint.sh"]
-CMD ["/opt/terraria/TerrariaServer.bin.x86_64", "-config", "/data/config.txt"]
+CMD ["/opt/terraria/TerrariaServer.bin.x86_64"]

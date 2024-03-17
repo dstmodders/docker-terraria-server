@@ -42,7 +42,7 @@ jobs:
       - name: Lint using Prettier
         run: prettier --check . || true
       - name: Output Prettier results
-        id: prettier-output
+        id: prettier
         run: echo "issues=$(prettier --list-different . | wc -l)" >> $GITHUB_OUTPUT
       - name: Lint using Hadolint (official)
         uses: hadolint/hadolint-action@v3.1.0
@@ -57,7 +57,7 @@ jobs:
           dockerfile: ./tshock/Dockerfile
           no-fail: true
       - name: Output Hadolint results
-        id: hadolint-output
+        id: hadolint
         run: |
           official_issues="$(echo '${{ steps.hadolint-official.outputs.results }}' | sed '/^$/d' | sed '$!N; /^\n$/D' | wc -l)"
           tshock_issues="$(echo '${{ steps.hadolint-tshock.outputs.results }}' | sed '/^$/d' | sed '$!N; /^\n$/D' | wc -l)"
@@ -67,10 +67,10 @@ jobs:
           echo "issues=$((official_issues + tshock_issues))" >> $GITHUB_OUTPUT
       - name: Check results
         run: |
-          hadolint_official_issues="${{ steps.hadolint-output.outputs.official-issues }}"
-          hadolint_tshock_issues="${{ steps.hadolint-output.outputs.tshock-issues }}"
-          hadolint_issues="${{ steps.hadolint-output.outputs.issues }}"
-          prettier_issues="${{ steps.prettier-output.outputs.issues }}"
+          hadolint_official_issues="${{ steps.hadolint.outputs.official-issues }}"
+          hadolint_tshock_issues="${{ steps.hadolint.outputs.tshock-issues }}"
+          hadolint_issues="${{ steps.hadolint.outputs.issues }}"
+          prettier_issues="${{ steps.prettier.outputs.issues }}"
 
           echo "Hadolint issues (official): $hadolint_official_issues"
           echo "Hadolint issues (tshock): $hadolint_tshock_issues"
@@ -90,8 +90,8 @@ jobs:
             {STATUS}
             {REF}
             Node.js: ${{ steps.node.outputs.node-version }}
-            Hadolint issues: ${{ steps.hadolint-output.outputs.issues || 'Skipped' }}
-            Prettier issues: ${{ steps.prettier-output.outputs.issues || 'Skipped' }}
+            Hadolint issues: ${{ steps.hadolint.outputs.issues || 'Skipped' }}
+            Prettier issues: ${{ steps.prettier.outputs.issues || 'Skipped' }}
           status: ${{ job.status }}
           timestamp: ${{ steps.slack.outputs.slack-timestamp }}
 

@@ -5,6 +5,8 @@
 [![CI]](https://github.com/dstmodders/docker-terraria-server/actions/workflows/ci.yml)
 [![Build]](https://github.com/dstmodders/docker-terraria-server/actions/workflows/build.yml)
 
+![Terraria Logo](./logo.png)
+
 ## Supported tags and respective `Dockerfile` links
 
 - [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/b2dc0304e1dd9fc5693a4c17251cb156452d434f/official/Dockerfile)

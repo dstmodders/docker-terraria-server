@@ -1,3 +1,5 @@
+![Terraria Logo](https://raw.githubusercontent.com/dstmodders/docker-terraria-server/main/logo.png)
+
 ## Supported tags and respective `Dockerfile` links
 
 - [`1.4.4.9-official`, `1.4.4.9`, `official`, `latest`](https://github.com/dstmodders/docker-terraria-server/blob/b2dc0304e1dd9fc5693a4c17251cb156452d434f/official/Dockerfile)

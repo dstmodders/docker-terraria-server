@@ -61,8 +61,12 @@ RUN groupadd --gid 1000 tshock \
     /var/log/apt/ \
     /var/log/dpkg.log
 
+COPY ./entrypoint/ /opt/entrypoint/
+RUN chmod +x /opt/entrypoint/entrypoint.sh
+
 USER tshock
 WORKDIR /opt/tshock/
 EXPOSE 7777 7878
 
+ENTRYPOINT ["/opt/entrypoint/entrypoint.sh"]
 CMD ["/opt/tshock/TShock.Server"]

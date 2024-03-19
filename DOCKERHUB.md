@@ -12,9 +12,9 @@ community [TShock] variants, emphasizing pure vanilla experience by default.
 
 ## Official
 
-**By default, the official [Terraria] server stores worlds in the home
-directory: `/home/terraria/.local/share/Terraria/Worlds/`. We have changed the
-default path to `/data/worlds/` instead to simplify the mounting process.**
+**By default, the official [Terraria] server stores worlds in
+`/home/terraria/.local/share/Terraria/Worlds/`. We have changed the default path
+to `/data/worlds/` instead to simplify the mounting process.**
 
 ### Docker Run (official)
 
@@ -172,11 +172,10 @@ services:
 
 ## TShock
 
-**By default, the [TShock] server stores worlds in the home directory:
+**By default, the [TShock] server stores worlds in
 `/home/tshock/.local/share/Terraria/Worlds/`. The [TShock] server configurations
-are stored in `/opt/tshock/tshock/`. In the future, we are planning to change
-the default paths to simplify the mounting process, just like we did with the
-official one.**
+are stored in `/opt/tshock/tshock/`. We have changed the default paths to point
+to `/data/` instead to simplify the mounting process.**
 
 ### Docker Run (tshock)
 
@@ -197,37 +196,19 @@ single `/data/` directory, as for now, we don't override them by default.
 #### Shell/Bash (Linux & macOS)
 
 ```shell
-$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock \
-    ./TShock.Server \
-      -configpath /data/tshock/ \
-      -crashdir /data/tshock/crashes/ \
-      -logpath /data/tshock/logs/ \
-      -additionalplugins /data/plugins/ \
-      -worldselectpath /data/worlds/
+$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
 
 #### CMD (Windows)
 
 ```cmd
-> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock ^
-    ./TShock.Server ^
-      -configpath /data/tshock/ ^
-      -crashdir /data/tshock/crashes/ ^
-      -logpath /data/tshock/logs/ ^
-      -additionalplugins /data/plugins/ ^
-      -worldselectpath /data/worlds/
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
 
 #### PowerShell (Windows)
 
 ```powershell
-PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock `
-    ./TShock.Server `
-      -configpath /data/tshock/ `
-      -crashdir /data/tshock/crashes/ `
-      -logpath /data/tshock/logs/ `
-      -additionalplugins /data/plugins/ `
-      -worldselectpath /data/worlds/
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
 
 ### Docker Compose (tshock)
@@ -238,13 +219,6 @@ version: '3.7'
 services:
   terraria:
     image: 'dstmodders/terraria-server:tshock'
-    command: >
-      ./TShock.Server \
-      -configpath /data/tshock/ \
-      -crashdir /data/tshock/crashes/ \
-      -logpath /data/tshock/logs/ \
-      -additionalplugins /data/plugins/ \
-      -worldselectpath /data/worlds/
     stdin_open: true
     tty: true
     ports:

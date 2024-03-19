@@ -10,6 +10,14 @@ args=''
 binary_basename="$(basename "$binary")"
 start_server=0
 
+# server parameters with their default values
+# https://ikebukuro.tshock.co/#/command-line-parameters
+additionalplugins='/data/plugins/'
+configpath='/data/tshock/'
+crashdir='/data/tshock/crashes/'
+logpath='/data/tshock/logs/'
+worldselectpath='/data/worlds/'
+
 add_arg() {
   key="$1"
   value="$2"
@@ -40,7 +48,7 @@ while [ $# -gt 0 ]; do
   value="$(trim "$2")"
   case "$key" in
     # https://ikebukuro.tshock.co/#/command-line-parameters
-    -ip|-port|-maxplayers|-players|-world|-worldselectpath|-worldname|-autocreate|-config|-pass|-password|-motd|-configpath|-logpath|-logformat|-worldevil|-difficulty|-loadlib|-crashdir|-additionalplugins)
+    -ip|-port|-maxplayers|-players|-world|-worldname|-autocreate|-config|-pass|-password|-motd|-logformat|-worldevil|-difficulty|-loadlib)
       start_server=1
       add_arg "$key" "$value"
       shift 2
@@ -49,6 +57,31 @@ while [ $# -gt 0 ]; do
       start_server=1
       add_arg "$key"
       shift 1
+      ;;
+    -worldselectpath)
+      start_server=1
+      worldselectpath="$value"
+      shift 2
+      ;;
+    -configpath)
+      start_server=1
+      configpath="$value"
+      shift 2
+      ;;
+    -logpath)
+      start_server=1
+      logpath="$value"
+      shift 2
+      ;;
+    -crashdir)
+      start_server=1
+      crashdir="$value"
+      shift 2
+      ;;
+    -additionalplugins)
+      start_server=1
+      additionalplugins="$value"
+      shift 2
       ;;
     "./$binary_basename")
       if [ "$(pwd)" = '/opt/tshock' ]; then
@@ -65,6 +98,12 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+add_arg '-additionalplugins' "$additionalplugins"
+add_arg '-configpath' "$configpath"
+add_arg '-crashdir' "$crashdir"
+add_arg '-logpath' "$logpath"
+add_arg '-worldselectpath' "$worldselectpath"
+
 if [ "$start_server" -eq 1 ]; then
   echo "Terraria version: $TERRARIA_VERSION"
   echo "TShock version: $TERRARIA_TSHOCK_VERSION"
@@ -78,5 +117,6 @@ if [ "$start_server" -eq 1 ]; then
   fi
 
   echo '---'
+  mkdir -p "$configpath" "$crashdir" "$logpath" "$additionalplugins" "$worldselectpath"
   exec "$binary" $args
 fi

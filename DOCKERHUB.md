@@ -83,14 +83,10 @@ $ docker stop terraria # stop
 #### CMD (Windows)
 
 ```cmd
-REM start
-> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server
-REM read output
-> docker logs terraria
-REM send input
-> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
-REM stop
-> docker stop terraria
+> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server & REM start
+> docker logs terraria & REM read output
+> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" & REM send input
+> docker stop terraria & REM stop
 ```
 
 #### PowerShell (Windows)

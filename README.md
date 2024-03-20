@@ -343,28 +343,23 @@ $ docker stop terraria # stop
     -e TERRARIA_LOBBY='' \
     -e TERRARIA_STEAM=0 \
     dstmodders/terraria-server
-$ docker logs terraria # read output
-$ docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
-$ docker stop terraria # stop</pre></p>
+$ docker logs terraria
+$ docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
+$ docker stop terraria</pre></p>
 </details>
 
 ##### CMD (Windows)
 
 ```cmd
-REM start
-> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server
-REM read output
-> docker logs terraria
-REM send input
-> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
-REM stop
-> docker stop terraria
+> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server & REM start
+> docker logs terraria & REM read output
+> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" & REM send input
+> docker stop terraria & REM stop
 ```
 
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
-<p><pre>REM start
-> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 ^
+<p><pre>> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 ^
     -e DISABLE_COLORS=0 ^
     -e TZ=UTC ^
     -e TERRARIA_AUTOCREATE=3 ^
@@ -406,12 +401,9 @@ REM stop
     -e TERRARIA_LOBBY="" ^
     -e TERRARIA_STEAM=0 ^
     dstmodders/terraria-server
-REM read output
 > docker logs terraria
-REM send input
-> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" REM send input
-REM stop
-> docker stop terraria REM stop</pre></p>
+> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
+> docker stop terraria</pre></p>
 </details>
 
 ##### PowerShell (Windows)
@@ -467,9 +459,9 @@ PS:\> docker stop terraria # stop
     -e TERRARIA_LOBBY='' `
     -e TERRARIA_STEAM=0 `
     dstmodders/terraria-server
-PS:\> docker logs terraria # read output
-PS:\> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input" # send input
-PS:\> docker stop terraria # stop</pre></p>
+PS:\> docker logs terraria
+PS:\> docker exec terraria /bin/sh -c "echo 'help' >> /tmp/input"
+PS:\> docker stop terraria</pre></p>
 </details>
 
 #### Docker Compose (official)

@@ -117,7 +117,9 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
+    -e DEBUG_ENTRYPOINT=0 \
     -e DISABLE_COLORS=0 \
+    -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     -e TERRARIA_AUTOCREATE=3 \
     -e TERRARIA_BANLIST=/data/banlist.txt \
@@ -169,7 +171,9 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
+    -e DEBUG_ENTRYPOINT=0 ^
     -e DISABLE_COLORS=0 ^
+    -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     -e TERRARIA_AUTOCREATE=3 ^
     -e TERRARIA_BANLIST=/data/banlist.txt ^
@@ -221,7 +225,9 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
+    -e DEBUG_ENTRYPOINT=0 `
     -e DISABLE_COLORS=0 `
+    -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     -e TERRARIA_AUTOCREATE=3 `
     -e TERRARIA_BANLIST=/data/banlist.txt `
@@ -302,7 +308,9 @@ $ docker stop terraria # stop
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>$ docker run --rm --name=terraria -d -v "$(pwd):/data/" -p 7777:7777 \
+    -e DEBUG_ENTRYPOINT=0 \
     -e DISABLE_COLORS=0 \
+    -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     -e TERRARIA_AUTOCREATE=3 \
     -e TERRARIA_BANLIST=/data/banlist.txt \
@@ -360,7 +368,9 @@ $ docker stop terraria</pre></p>
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>> docker run --rm --name=terraria -d -v "%CD%:/data/" -p 7777:7777 ^
+    -e DEBUG_ENTRYPOINT=0 ^
     -e DISABLE_COLORS=0 ^
+    -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     -e TERRARIA_AUTOCREATE=3 ^
     -e TERRARIA_BANLIST=/data/banlist.txt ^
@@ -418,7 +428,9 @@ PS:\> docker stop terraria # stop
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>PS:\> docker run --rm --name=terraria -d -v "${PWD}:/data/" -p 7777:7777 `
+    -e DEBUG_ENTRYPOINT=0 `
     -e DISABLE_COLORS=0 `
+    -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     -e TERRARIA_AUTOCREATE=3 `
     -e TERRARIA_BANLIST=/data/banlist.txt `

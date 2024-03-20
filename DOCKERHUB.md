@@ -222,6 +222,9 @@ services:
       - '7878:7878' # REST API
     volumes:
       - './data/:/data/:rw'
+    environment:
+      DISABLE_SUMMARY: 0
+      TZ: UTC
 ```
 
 ## Supported environment variables
@@ -235,7 +238,7 @@ exclusive to the system.
 | ------------------------- | ------------------------ | --------- | --------------------------------------------------------- |
 | `DEBUG_ENTRYPOINT`        | `official`               | `0`       | Toggles debug messages in the entrypoint                  |
 | `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output                                    |
-| `DISABLE_SUMMARY`         | `official`               | `0`       | Toggles configurations summary before starting the server |
+| `DISABLE_SUMMARY`         | `official`<br />`tshock` | `0`       | Toggles configurations summary before starting the server |
 | `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version                                    |
 | `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version                                  |
 | `TZ`                      | `official`<br />`tshock` | `UTC`     | Sets the timezone.                                        |

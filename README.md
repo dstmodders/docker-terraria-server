@@ -581,6 +581,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
+    -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -594,6 +595,7 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
+    -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -607,6 +609,7 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-se
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
+    -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -627,6 +630,7 @@ services:
     volumes:
       - './data/:/data/:rw'
     environment:
+      DISABLE_SUMMARY: 0
       TZ: UTC
 ```
 
@@ -646,7 +650,7 @@ exclusive to the system.
 | ------------------------- | ------------------------ | --------- | --------------------------------------------------------- |
 | `DEBUG_ENTRYPOINT`        | `official`               | `0`       | Toggles debug messages in the entrypoint                  |
 | `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output                                    |
-| `DISABLE_SUMMARY`         | `official`               | `0`       | Toggles configurations summary before starting the server |
+| `DISABLE_SUMMARY`         | `official`<br />`tshock` | `0`       | Toggles configurations summary before starting the server |
 | `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version                                    |
 | `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version                                  |
 | `TZ`                      | `official`<br />`tshock` | `UTC`     | Sets the timezone.                                        |

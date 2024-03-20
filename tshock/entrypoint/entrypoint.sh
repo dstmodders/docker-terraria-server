@@ -105,18 +105,21 @@ add_arg '-logpath' "$logpath"
 add_arg '-worldselectpath' "$worldselectpath"
 
 if [ "$start_server" -eq 1 ]; then
-  echo "Terraria version: $TERRARIA_VERSION"
-  echo "TShock version: $TERRARIA_TSHOCK_VERSION"
-  echo "Working directory: $(pwd)/"
-  echo "Command: $binary $args"
+  if [ "$DISABLE_SUMMARY" != '1' ]; then
+    echo "Terraria version: $TERRARIA_VERSION"
+    echo "TShock version: $TERRARIA_TSHOCK_VERSION"
+    echo "Working directory: $(pwd)/"
+    echo "Command: $binary $args"
 
-  if [ -t 0 ]; then
-    echo "TTY mode: enabled"
-  else
-    echo "TTY mode: disabled"
+    if [ -t 0 ]; then
+      echo "TTY mode: enabled"
+    else
+      echo "TTY mode: disabled"
+    fi
+
+    echo '---'
   fi
 
-  echo '---'
   mkdir -p "$configpath" "$crashdir" "$logpath" "$additionalplugins" "$worldselectpath"
   exec "$binary" $args
 fi

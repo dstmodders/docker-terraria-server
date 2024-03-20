@@ -11,4 +11,5 @@ services:
     volumes:
       - './data/:/data/:rw'
     environment:
+      DISABLE_SUMMARY: 0
       TZ: UTC

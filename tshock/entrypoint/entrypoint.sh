@@ -12,11 +12,11 @@ start_server=0
 
 # server parameters with their default values
 # https://ikebukuro.tshock.co/#/command-line-parameters
-additionalplugins='/data/plugins/'
-configpath='/data/tshock/'
-crashdir='/data/tshock/crashes/'
-logpath='/data/tshock/logs/'
-worldselectpath='/data/worlds/'
+additionalplugins="$TSHOCK_ADDITIONALPLUGINS"
+configpath="$TSHOCK_CONFIGPATH"
+crashdir="$TSHOCK_CRASHDIR"
+logpath="$TSHOCK_LOGPATH"
+worldselectpath="$TSHOCK_WORLDSELECTPATH"
 
 add_arg() {
   key="$1"

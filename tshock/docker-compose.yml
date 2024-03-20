@@ -11,5 +11,12 @@ services:
     volumes:
       - './data/:/data/:rw'
     environment:
+      # system parameters
       DISABLE_SUMMARY: 0
       TZ: UTC
+      # command-line parameters
+      TSHOCK_ADDITIONALPLUGINS: /data/plugins/
+      TSHOCK_CONFIGPATH: /data/tshock/
+      TSHOCK_CRASHDIR: /data/tshock/crashes/
+      TSHOCK_LOGPATH: /data/tshock/logs/
+      TSHOCK_WORLDSELECTPATH: /data/worlds/

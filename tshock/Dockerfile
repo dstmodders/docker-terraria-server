@@ -11,6 +11,14 @@ ENV TERRARIA_TSHOCK_VERSION="${TERRARIA_TSHOCK_VERSION}"
 ENV DISABLE_SUMMARY=0
 ENV TZ="UTC"
 
+# command-line parameters
+# https://ikebukuro.tshock.co/#/command-line-parameters
+ENV TSHOCK_ADDITIONALPLUGINS="/data/plugins/"
+ENV TSHOCK_CONFIGPATH="/data/tshock/"
+ENV TSHOCK_CRASHDIR="/data/tshock/crashes/"
+ENV TSHOCK_LOGPATH="/data/tshock/logs/"
+ENV TSHOCK_WORLDSELECTPATH="/data/worlds/"
+
 WORKDIR /tmp/
 # hadolint ignore=DL3003
 RUN groupadd --gid 1000 terraria \

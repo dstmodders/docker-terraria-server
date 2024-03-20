@@ -10,3 +10,5 @@ services:
       - '7878:7878' # REST API
     volumes:
       - './data/:/data/:rw'
+    environment:
+      TZ: UTC

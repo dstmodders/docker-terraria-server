@@ -578,17 +578,38 @@ single `/data/` directory, as for now, we don't override them by default.
 $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
 
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
+    -e TZ=UTC \
+    dstmodders/terraria-server:tshock</pre></p>
+</details>
+
 ##### CMD (Windows)
 
 ```cmd
 > docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
 
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
+    -e TZ=UTC ^
+    dstmodders/terraria-server:tshock</pre></p>
+</details>
+
 ##### PowerShell (Windows)
 
 ```powershell
 PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
 ```
+
+<details>
+<summary><b>The same, but with default environment variables</b></summary>
+<p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
+    -e TZ=UTC `
+    dstmodders/terraria-server:tshock</pre></p>
+</details>
 
 #### Docker Compose (tshock)
 
@@ -605,6 +626,8 @@ services:
       - '7878:7878' # REST API
     volumes:
       - './data/:/data/:rw'
+    environment:
+      TZ: UTC
 ```
 
 ## Supported environment variables

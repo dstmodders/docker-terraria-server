@@ -12,8 +12,8 @@ ENV TZ="UTC"
 
 WORKDIR /tmp/
 # hadolint ignore=DL3003
-RUN groupadd --gid 1000 tshock \
-  && useradd --uid 1000 --gid tshock --shell /bin/bash --create-home tshock \
+RUN groupadd --gid 1000 terraria \
+  && useradd --uid 1000 --gid terraria --shell /bin/bash --create-home terraria \
   && dpkg --add-architecture i386 \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
@@ -41,7 +41,7 @@ RUN groupadd --gid 1000 tshock \
   && tar -xvf TShock-Beta-linux-x64-Release.tar -C /opt/tshock/ \
   && rm -Rf /tmp/* \
   && cd /opt/tshock/ \
-  && chown -R tshock:tshock . \
+  && chown -R terraria:terraria . \
   && chmod +x TShock.* \
   # clean
   && apt-get remove -y \
@@ -64,7 +64,7 @@ RUN groupadd --gid 1000 tshock \
 COPY ./entrypoint/ /opt/entrypoint/
 RUN chmod +x /opt/entrypoint/entrypoint.sh
 
-USER tshock
+USER terraria
 WORKDIR /opt/tshock/
 EXPOSE 7777 7878
 

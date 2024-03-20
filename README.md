@@ -536,7 +536,7 @@ services:
 
 > [!IMPORTANT]
 > By default, the [TShock] server stores worlds in
-> `/home/tshock/.local/share/Terraria/Worlds/`. The [TShock] server
+> `/home/terraria/.local/share/Terraria/Worlds/`. The [TShock] server
 > configurations are stored in `/opt/tshock/tshock/`. We have changed the
 > default paths to point to `/data/` instead to simplify the mounting process.
 

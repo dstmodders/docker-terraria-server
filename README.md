@@ -575,12 +575,12 @@ single `/data/` directory, as for now, we don't override them by default.
 ##### Shell/Bash (Linux & macOS)
 
 ```shell
-$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
-<p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 \
+<p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 \
     -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     dstmodders/terraria-server:tshock</pre></p>
@@ -589,12 +589,12 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 ##### CMD (Windows)
 
 ```cmd
-> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
-<p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 ^
+<p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 -p 7878:7878 ^
     -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     dstmodders/terraria-server:tshock</pre></p>
@@ -603,12 +603,12 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server
 ##### PowerShell (Windows)
 
 ```powershell
-PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
-<p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 `
+<p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 `
     -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     dstmodders/terraria-server:tshock</pre></p>

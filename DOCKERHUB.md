@@ -192,19 +192,19 @@ single `/data/` directory, as for now, we don't override them by default.
 #### Shell/Bash (Linux & macOS)
 
 ```shell
-$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 #### CMD (Windows)
 
 ```cmd
-> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 #### PowerShell (Windows)
 
 ```powershell
-PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 dstmodders/terraria-server:tshock
+PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 dstmodders/terraria-server:tshock
 ```
 
 ### Docker Compose (tshock)

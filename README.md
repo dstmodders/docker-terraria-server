@@ -584,9 +584,9 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/te
     -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ \
-    -e TSHOCK_CONFIGPATH=/data/tshock/ \
-    -e TSHOCK_CRASHDIR=/data/tshock/crashes/ \
-    -e TSHOCK_LOGPATH=/data/tshock/logs/ \
+    -e TSHOCK_CONFIGPATH=/data/ \
+    -e TSHOCK_CRASHDIR=/data/crashes/ \
+    -e TSHOCK_LOGPATH=/data/logs/ \
     -e TSHOCK_WORLDSELECTPATH=/data/worlds/ \
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -603,9 +603,9 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/te
     -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ ^
-    -e TSHOCK_CONFIGPATH=/data/tshock/ ^
-    -e TSHOCK_CRASHDIR=/data/tshock/crashes/ ^
-    -e TSHOCK_LOGPATH=/data/tshock/logs/ ^
+    -e TSHOCK_CONFIGPATH=/data/ ^
+    -e TSHOCK_CRASHDIR=/data/crashes/ ^
+    -e TSHOCK_LOGPATH=/data/logs/ ^
     -e TSHOCK_WORLDSELECTPATH=/data/worlds/ ^
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -622,9 +622,9 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 dstmodder
     -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ `
-    -e TSHOCK_CONFIGPATH=/data/tshock/ `
-    -e TSHOCK_CRASHDIR=/data/tshock/crashes/ `
-    -e TSHOCK_LOGPATH=/data/tshock/logs/ `
+    -e TSHOCK_CONFIGPATH=/data/ `
+    -e TSHOCK_CRASHDIR=/data/crashes/ `
+    -e TSHOCK_LOGPATH=/data/logs/ `
     -e TSHOCK_WORLDSELECTPATH=/data/worlds/ `
     dstmodders/terraria-server:tshock</pre></p>
 </details>
@@ -650,9 +650,9 @@ services:
       TZ: UTC
       # command-line parameters
       TSHOCK_ADDITIONALPLUGINS: /data/plugins/
-      TSHOCK_CONFIGPATH: /data/tshock/
-      TSHOCK_CRASHDIR: /data/tshock/crashes/
-      TSHOCK_LOGPATH: /data/tshock/logs/
+      TSHOCK_CONFIGPATH: /data/
+      TSHOCK_CRASHDIR: /data/crashes/
+      TSHOCK_LOGPATH: /data/logs/
       TSHOCK_WORLDSELECTPATH: /data/worlds/
 ```
 
@@ -739,20 +739,20 @@ through the server configuration file.
 Command-line environment variables represent features unique to [Terraria]
 server binary parameters.
 
-| Name                              | Image      | Default                 | Description                                                                                                                                                                                                                                                    |
-| --------------------------------- | ---------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TERRARIA_ANNOUNCEMENTBOXRANGE`   | `official` |                         | Sets the "Announcement Box" text messaging range in pixels, `-1` for serverwide announcements.                                                                                                                                                                 |
-| `TERRARIA_CONFIG`                 | `official` | `/data/config.txt`      | Sets the configuration file path.                                                                                                                                                                                                                              |
-| `TERRARIA_DISABLEANNOUNCEMENTBOX` | `official` |                         | Disables the text announcements that "Announcement Box" makes when pulsed from wire.                                                                                                                                                                           |
-| `TERRARIA_FORCEPRIORITY`          | `official` |                         | <p>Sets the process priority for this task:</p><ul><li>`0` (realtime)</li><li>`1` (high)</li><li>`2` (above normal)</li><li>`3` (normal)</li><li>`4` (below normal)</li><li>`5` (idle)</li></ul><p>If this is used the `priority` setting will be ignored.</p> |
-| `TERRARIA_IP`                     | `official` |                         | Sets the IP address for the server to listen on.                                                                                                                                                                                                               |
-| `TERRARIA_LOBBY`                  | `official` |                         | <p>Allows only friends to join the server or sets it to private if Steam is enabled:</p><ul><li>`friends`</li><li>`private`</li></ul>                                                                                                                          |
-| `TERRARIA_STEAM`                  | `official` | `0`                     | Toggles Steam support.                                                                                                                                                                                                                                         |
-| `TSHOCK_ADDITIONALPLUGINS`        | `tshock`   | `/data/plugins/`        | Sets the additional plugins directory path.                                                                                                                                                                                                                    |
-| `TSHOCK_CONFIGPATH`               | `tshock`   | `/data/tshock/`         | Sets the configurations directory path.                                                                                                                                                                                                                        |
-| `TSHOCK_CRASHDIR`                 | `tshock`   | `/data/tshock/crashes/` | Sets the crashes directory path.                                                                                                                                                                                                                               |
-| `TSHOCK_LOGPATH`                  | `tshock`   | `/data/tshock/logs/`    | Sets the logs directory path.                                                                                                                                                                                                                                  |
-| `TSHOCK_WORLDSELECTPATH`          | `tshock`   | `/data/worlds/`         | Sets the worlds directory path.                                                                                                                                                                                                                                |
+| Name                              | Image      | Default            | Description                                                                                                                                                                                                                                                    |
+| --------------------------------- | ---------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TERRARIA_ANNOUNCEMENTBOXRANGE`   | `official` |                    | Sets the "Announcement Box" text messaging range in pixels, `-1` for serverwide announcements.                                                                                                                                                                 |
+| `TERRARIA_CONFIG`                 | `official` | `/data/config.txt` | Sets the configuration file path.                                                                                                                                                                                                                              |
+| `TERRARIA_DISABLEANNOUNCEMENTBOX` | `official` |                    | Disables the text announcements that "Announcement Box" makes when pulsed from wire.                                                                                                                                                                           |
+| `TERRARIA_FORCEPRIORITY`          | `official` |                    | <p>Sets the process priority for this task:</p><ul><li>`0` (realtime)</li><li>`1` (high)</li><li>`2` (above normal)</li><li>`3` (normal)</li><li>`4` (below normal)</li><li>`5` (idle)</li></ul><p>If this is used the `priority` setting will be ignored.</p> |
+| `TERRARIA_IP`                     | `official` |                    | Sets the IP address for the server to listen on.                                                                                                                                                                                                               |
+| `TERRARIA_LOBBY`                  | `official` |                    | <p>Allows only friends to join the server or sets it to private if Steam is enabled:</p><ul><li>`friends`</li><li>`private`</li></ul>                                                                                                                          |
+| `TERRARIA_STEAM`                  | `official` | `0`                | Toggles Steam support.                                                                                                                                                                                                                                         |
+| `TSHOCK_ADDITIONALPLUGINS`        | `tshock`   | `/data/plugins/`   | Sets the additional plugins directory path.                                                                                                                                                                                                                    |
+| `TSHOCK_CONFIGPATH`               | `tshock`   | `/data/`           | Sets the configurations directory path.                                                                                                                                                                                                                        |
+| `TSHOCK_CRASHDIR`                 | `tshock`   | `/data/crashes/`   | Sets the crashes directory path.                                                                                                                                                                                                                               |
+| `TSHOCK_LOGPATH`                  | `tshock`   | `/data/logs/`      | Sets the logs directory path.                                                                                                                                                                                                                                  |
+| `TSHOCK_WORLDSELECTPATH`          | `tshock`   | `/data/worlds/`    | Sets the worlds directory path.                                                                                                                                                                                                                                |
 
 ## Supported architectures
 

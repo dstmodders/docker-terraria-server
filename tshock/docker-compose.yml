@@ -16,7 +16,7 @@ services:
       TZ: UTC
       # command-line parameters
       TSHOCK_ADDITIONALPLUGINS: /data/plugins/
-      TSHOCK_CONFIGPATH: /data/tshock/
-      TSHOCK_CRASHDIR: /data/tshock/crashes/
-      TSHOCK_LOGPATH: /data/tshock/logs/
+      TSHOCK_CONFIGPATH: /data/
+      TSHOCK_CRASHDIR: /data/crashes/
+      TSHOCK_LOGPATH: /data/logs/
       TSHOCK_WORLDSELECTPATH: /data/worlds/

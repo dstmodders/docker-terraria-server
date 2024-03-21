@@ -7,6 +7,7 @@ if [ -n "$FUNCTIONS_DIRNAME" ]; then
   functions_dirname="$FUNCTIONS_DIRNAME"
 fi
 
+. "$functions_dirname/debug_functions.sh"
 . "$functions_dirname/print_functions.sh"
 . "$functions_dirname/validate_functions.sh"
 
@@ -22,7 +23,6 @@ args=''
 binary_basename="$(basename $binary)"
 capture_input_pid=''
 capture_output_pid=''
-debug="$DEBUG_ENTRYPOINT"
 journey_permissions='journeypermission_biomespread_setfrozen
 journeypermission_godmode
 journeypermission_increaseplacementrange
@@ -102,19 +102,6 @@ lock() {
 unlock() {
 #  echo 'Unlocking...'
   rm "$lockfile" > /dev/null 2>&1 || true
-}
-
-debug_echo() {
-  if [ "$debug" = '1' ]; then
-    echo "$@"
-  fi
-}
-
-debug_printf() {
-  if [ "$debug" = '1' ]; then
-    # shellcheck disable=SC2059
-    printf "$@"
-  fi
 }
 
 validate_known_parameter() {
@@ -441,7 +428,7 @@ capture_output() {
 }
 
 cleanup() {
-  if [ "$debug" = '1' ]; then
+  if [ "$(is_debug)" -eq 1 ]; then
     lock
   fi
 
@@ -473,7 +460,7 @@ cleanup() {
   wait "$capture_input_pid"
   wait "$capture_output_pid"
 
-  if [ "$debug" = '1' ]; then
+  if [ "$(is_debug)" -eq 1 ]; then
     unlock
   fi
 

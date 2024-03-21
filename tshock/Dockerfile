@@ -70,7 +70,7 @@ RUN groupadd --gid 1000 terraria \
     /var/log/apt/ \
     /var/log/dpkg.log
 
-COPY ./entrypoint/ /opt/entrypoint/
+COPY ./tshock/entrypoint/ /opt/entrypoint/
 RUN chmod +x /opt/entrypoint/entrypoint.sh
 
 USER terraria

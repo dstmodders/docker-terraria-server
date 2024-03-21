@@ -774,8 +774,8 @@ server binary parameters.
 To build images locally:
 
 ```shell
-$ docker build ./official/ --tag='dstmodders/terraria-server:latest'
-$ docker build ./tshock/ --tag='dstmodders/terraria-server:tshock'
+$ docker build --file='./official/Dockerfile' --tag='dstmodders/terraria-server:latest' .
+$ docker build --file='./tshock/Dockerfile' --tag='dstmodders/terraria-server:tshock' .
 ```
 
 ## License

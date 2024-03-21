@@ -93,7 +93,7 @@ jobs:
             TERRARIA_VERSION=${{ matrix.image.terraria_version }}
           cache-from: type=registry,ref=${{ github.repository_owner }}/terraria-server:${{ matrix.image.terraria_version }}-official
           cache-to: type=inline
-          context: ./official/
+          context: .
           file: ./official/Dockerfile
           labels: ${{ steps.image-meta.outputs.labels }}
           platforms: linux/amd64
@@ -172,7 +172,7 @@ jobs:
             TERRARIA_VERSION=${{ matrix.image.terraria_version }}
           cache-from: type=registry,ref=${{ github.repository_owner }}/terraria-server:${{ matrix.image.terraria_version }}-tshock-${{ matrix.image.tshock_version }}
           cache-to: type=inline
-          context: ./tshock/
+          context: .
           file: ./tshock/Dockerfile
           labels: ${{ steps.image-meta.outputs.labels }}
           platforms: linux/amd64

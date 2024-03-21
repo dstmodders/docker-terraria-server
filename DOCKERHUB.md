@@ -126,7 +126,7 @@ services:
       TERRARIA_AUTOCREATE: 3
       TERRARIA_BANLIST: /data/banlist.txt
       TERRARIA_DIFFICULTY: 0
-      TERRARIA_LANGUAGE: 'en-US'
+      TERRARIA_LANGUAGE: en-US
       TERRARIA_MAXPLAYERS: 8
       TERRARIA_MOTD: "Please don't cut the purple trees!"
       TERRARIA_NPCSTREAM: 60

@@ -10,6 +10,12 @@ is_debug() {
   fi
 }
 
+debug_prefix() {
+  if [ "$debug" = '1' ]; then
+    printf "[DEBUG] "
+  fi
+}
+
 debug_echo() {
   if [ "$debug" = '1' ]; then
     echo "$@"
@@ -21,4 +27,14 @@ debug_printf() {
     # shellcheck disable=SC2059
     printf "$@"
   fi
+}
+
+debug_line_echo() {
+  debug_prefix
+  debug_echo "$@"
+}
+
+debug_line_printf() {
+  debug_prefix
+  debug_printf "$@"
 }

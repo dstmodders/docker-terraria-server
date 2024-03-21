@@ -433,9 +433,9 @@ cleanup() {
   fi
 
   debug_echo '---'
-  debug_echo 'Cleaning up...'
+  debug_line_echo 'Cleaning up...'
   if tmux has-session -t "$tmux_session" 2> /dev/null; then
-    debug_printf 'Stopping tmux session...'
+    debug_line_printf 'Stopping tmux session...'
     if tmux kill-session -t "$tmux_session" > /dev/null 2>&1; then
       debug_printf ' Done\n'
     else
@@ -443,14 +443,14 @@ cleanup() {
     fi
   fi
 
-  debug_printf 'Killing capture input (PID: %d)...' "$capture_input_pid"
+  debug_line_printf 'Killing capture input (PID: %d)...' "$capture_input_pid"
   if kill "$capture_input_pid" > /dev/null 2>&1; then
     debug_printf ' Done\n'
   else
     debug_printf ' Failed\n'
   fi
 
-  debug_printf 'Killing capture output (PID: %d)...' "$capture_output_pid"
+  debug_line_printf 'Killing capture output (PID: %d)...' "$capture_output_pid"
   if kill "$capture_output_pid" > /dev/null 2>&1; then
     debug_printf ' Done\n'
   else
@@ -464,11 +464,11 @@ cleanup() {
     unlock
   fi
 
-  debug_printf 'Removing %s...' "$datafile"
+  debug_line_printf 'Removing %s...' "$datafile"
   rm -f "$datafile"
   debug_printf ' Done\n'
 
-  debug_printf 'Removing %s...' "$lockfile"
+  debug_line_printf 'Removing %s...' "$lockfile"
   rm -f "$lockfile"
   debug_printf ' Done\n'
 
@@ -628,7 +628,7 @@ if [ "$start_server" -eq 1 ]; then
   mkfifo "$output_fifo"
 
   # start the input capture in the background
-  debug_printf "Starting capture input..."
+  debug_line_printf "Starting capture input..."
   capture_input 2> /dev/null &
   capture_input_pid="$!"
   debug_printf ' Done (PID: %d)\n' "$capture_input_pid"
@@ -638,7 +638,7 @@ if [ "$start_server" -eq 1 ]; then
 
   if [ -t 0 ]; then
     # start the output capture in the background
-    debug_printf "Starting capture output..."
+    debug_line_printf "Starting capture output..."
     capture_output 2> /dev/null &
     capture_output_pid="$!"
     debug_printf ' Done (PID: %d)\n' "$capture_output_pid"

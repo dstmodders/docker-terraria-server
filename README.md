@@ -19,7 +19,7 @@ community [TShock] variants, emphasizing pure vanilla experience by default.
 
 - [Quickstart](#quickstart)
 - [Usage](#usage)
-- [Supported environment variables](#supported-environment-variables)
+- [Supported environment variables]
 - [Supported architectures](#supported-architectures)
 - [Supported build arguments](#supported-build-arguments)
 - [Build](#build)
@@ -481,7 +481,7 @@ PS:\> docker stop terraria</pre></p>
 > [!NOTE]
 > The provided environment variables are all optional, as they use the default
 > values. We've added them to our example just so that you wouldn't have to dig
-> for them in [supported environment variables](#supported-environment-variables).
+> for them in [supported environment variables].
 
 ```yaml
 version: '3.7'
@@ -568,10 +568,6 @@ $ docker pull ghcr.io/dstmodders/terraria-server:tshock
 > [!TIP]
 > See [tags] for a list of all available versions.
 
-In the examples below, we will override the default [TShock] paths using the
-corresponding command-line parameters to store all the necessary data in a
-single `/data/` directory, as for now, we don't override them by default.
-
 ##### Shell/Bash (Linux & macOS)
 
 ```shell
@@ -630,6 +626,11 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 dstmodder
 </details>
 
 #### Docker Compose (tshock)
+
+> [!NOTE]
+> The provided environment variables are all optional, as they use the default
+> values. We've added them to our example just so that you wouldn't have to dig
+> for them in [supported environment variables].
 
 ```yaml
 version: '3.7'
@@ -787,6 +788,7 @@ Released under the [MIT License](https://opensource.org/licenses/MIT).
 [docker]: https://www.docker.com/
 [official size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/official?label=official%20size&logo=docker
 [official]: #official
+[supported environment variables]: #supported-environment-variables
 [tags]: https://hub.docker.com/r/dstmodders/terraria-server/tags
 [terraria]: https://terraria.org/
 [tshock size]: https://img.shields.io/docker/image-size/dstmodders/terraria-server/tshock?label=tshock%20size&logo=docker

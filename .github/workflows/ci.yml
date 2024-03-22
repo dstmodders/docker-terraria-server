@@ -117,9 +117,9 @@ jobs:
       - name: Test using Bats
         id: bats
         run: |
-          output="$(bats ./official/entrypoint/)"
+          output="$(bats ./entrypoint/)"
           tests_passed="$(echo "$output" | grep -c '^ok')"
-          tests_total="$(bats -c ./official/entrypoint/)"
+          tests_total="$(bats -c ./entrypoint/)"
 
           echo "$output"
           echo "output=$bats_output" >> $GITHUB_OUTPUT

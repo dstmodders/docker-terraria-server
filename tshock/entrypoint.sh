@@ -2,6 +2,15 @@
 
 set -e
 
+functions_dirname=$(dirname "$0")
+if [ -n "$FUNCTIONS_DIRNAME" ]; then
+  functions_dirname="$FUNCTIONS_DIRNAME"
+fi
+
+. "$functions_dirname/debug_functions.sh"
+. "$functions_dirname/print_functions.sh"
+. "$functions_dirname/validate_functions.sh"
+
 # paths
 binary='/opt/tshock/TShock.Server'
 

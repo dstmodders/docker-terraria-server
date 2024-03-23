@@ -8,6 +8,7 @@ if [ -n "$FUNCTIONS_DIRNAME" ]; then
 fi
 
 . "$functions_dirname/debug_functions.sh"
+. "$functions_dirname/general_functions.sh"
 . "$functions_dirname/print_functions.sh"
 . "$functions_dirname/validate_functions.sh"
 
@@ -43,13 +44,6 @@ add_arg() {
   else
     args="$args$arg"
   fi
-}
-
-trim() {
-  value="$1"
-  result=$(printf '%s\n' "$value" | sed -e 's/^[[:space:]]*//') # leading spaces
-  result=$(printf '%s\n' "$result" | sed -e 's/[[:space:]]*$//') # trailing spaces
-  echo "$result"
 }
 
 while [ $# -gt 0 ]; do

@@ -5,6 +5,11 @@ get_first_char() {
   echo "$value" | sed 's/^\(.\).*/\1/'
 }
 
+get_last_char() {
+  value="$1"
+  echo "$value" | sed 's/.*\(.\)$/\1/'
+}
+
 trim() {
   value="$1"
   result=$(printf '%s\n' "$value" | sed -e 's/^[[:space:]]*//') # leading spaces

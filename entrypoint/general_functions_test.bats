@@ -8,6 +8,12 @@ load general_functions.sh
   [ "$result" == 'h' ]
 }
 
+# get_last_char() tests
+@test "get_last_char() should get the last character from the string" {
+  result="$(get_last_char 'hello world!')"
+  [ "$result" == '!' ]
+}
+
 # trim() tests
 @test "trim() should remove leading and trailing spaces" {
   result="$(trim '   hello world!   ')"

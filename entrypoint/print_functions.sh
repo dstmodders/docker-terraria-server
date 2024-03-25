@@ -5,6 +5,7 @@ if [ -n "$FUNCTIONS_DIRNAME" ]; then
   functions_dirname="$FUNCTIONS_DIRNAME"
 fi
 
+. "$functions_dirname/general_functions.sh"
 . "$functions_dirname/validate_functions.sh"
 
 print_bold() {
@@ -246,4 +247,60 @@ print_ip_value() {
 
 print_lobby_value() {
   print_value "$1" 'validate_lobby' 1
+}
+
+print_command() {
+  value="$1"
+  total_spaces="$2"
+  if [ -z "$total_spaces" ]; then
+    total_spaces=2
+  fi
+  spaces="$(printf "%*s" "$total_spaces" '')"
+
+  result=""
+  count=0
+  total="$(echo "$value" | wc -w)"
+  quote_start=''
+
+  for arg in $value; do
+    count="$((count + 1))"
+    case "$arg" in
+      -secure|-noupnp|-steam|-disableannouncementbox|-ignoreversion|-forceupdate|-autoshutdown|-secure|-logclear|-dump|-heaptile|-constileation|-c)
+        quote_start=''
+        result="$(printf "%s\n%s%s" "$result" "$spaces" "$arg")"
+        if [ "$count" -ne "$total" ]; then
+          result="$(printf "%s \\" "$result")"
+        fi
+        ;;
+      -*=*)
+        quote_start=''
+        result="$(printf "%s\n%s%s \\" "$result" "$spaces" "$arg")"
+        ;;
+      -*)
+        quote_start=''
+        result="$(printf "%s\n%s%s " "$result" "$spaces" "$arg")"
+        ;;
+      *)
+        first_char="$(get_first_char "$arg")"
+        last_char="$(get_last_char "$arg")"
+
+        if [ "$quote_start" = '' ] && { [ "$first_char" = '"' ] || [ "$first_char" = "'" ]; } && [ "$first_char" != "$last_char" ]; then
+          quote_start="$first_char"
+        elif [ "$quote_start" != '' ] && { [ "$last_char" = '"' ] || [ "$last_char" = "'" ]; } && [ "$first_char" != "$last_char" ]; then
+          quote_start=''
+        fi
+
+        result="$(printf "%s%s" "$result" "$arg")"
+        if [ "$count" -ne "$total" ]; then
+          if [ "$quote_start" != '' ]; then
+            result="$(printf "%s " "$result")"
+          else
+            result="$(printf "%s \\" "$result")"
+          fi
+        fi
+        ;;
+    esac
+  done
+
+  echo "$result"
 }

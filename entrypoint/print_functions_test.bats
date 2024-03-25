@@ -314,3 +314,78 @@ pl-PL'
   result="$(print_lobby_value '')"
   [ "$result" == '- (empty)' ]
 }
+
+# print_command() tests
+@test "print_command() should print the command binary as is without any arguments" {
+  result="$(print_command '/opt/terraria/TerrariaServer.bin.x86_64')"
+  [ "$result" == '/opt/terraria/TerrariaServer.bin.x86_64' ]
+  result="$(print_command './TerrariaServer.bin.x86_64')"
+  [ "$result" == './TerrariaServer.bin.x86_64' ]
+  result="$(print_command 'TerrariaServer.bin.x86_64')"
+  [ "$result" == 'TerrariaServer.bin.x86_64' ]
+  result="$(print_command '/opt/tshock/TShock.Server')"
+  [ "$result" == '/opt/tshock/TShock.Server' ]
+  result="$(print_command './TShock.Server')"
+  [ "$result" == './TShock.Server' ]
+  result="$(print_command 'TShock.Server')"
+  [ "$result" == 'TShock.Server' ]
+}
+
+@test "print_command() should print the command as expected for the official server command" {
+  result="$(print_command "/opt/terraria/TerrariaServer.bin.x86_64 -config /data/config.txt -port 7777 -players 8 -maxplayers 8 -pass 123456 -password 123456 -motd \"Please don't cut the purple trees!\" -world /data/worlds/World.wld -autocreate 3 -banlist /data/banlist.txt -worldname World -secure -noupnp -steam -lobby friends -ip 127.0.0.1 -forcepriority 0 -disableannouncementbox -announcementboxrange 1000 -seed 123456")"
+  [ "$result" == "/opt/terraria/TerrariaServer.bin.x86_64 \\
+  -config /data/config.txt \\
+  -port 7777 \\
+  -players 8 \\
+  -maxplayers 8 \\
+  -pass 123456 \\
+  -password 123456 \\
+  -motd \"Please don't cut the purple trees!\" \\
+  -world /data/worlds/World.wld \\
+  -autocreate 3 \\
+  -banlist /data/banlist.txt \\
+  -worldname World \\
+  -secure \\
+  -noupnp \\
+  -steam \\
+  -lobby friends \\
+  -ip 127.0.0.1 \\
+  -forcepriority 0 \\
+  -disableannouncementbox \\
+  -announcementboxrange 1000 \\
+  -seed 123456" ]
+}
+
+@test "print_command() should print the command as expected for the tshock server command" {
+  result="$(print_command "/opt/tshock/TShock.Server -ip 127.0.0.1 -port 7777 -maxplayers 8 -players 8 -world /data/worlds/World.wld -worldselectpath /data/worlds/ -worldname World -autocreate 3 -config /data/config.txt -ignoreversion -forceupdate -pass 123456 -password 123456 -motd \"Please don't cut the purple trees!\" -autoshutdown -secure -configpath /data/ -logpath /data/logs/ -logformat \"yyyy-MM-dd\" -logclear -dump -worldevil random -heaptile -constileation -c -difficulty 0 -loadlib /data/MyLibrary.dll -crashdir /data/crashes/ -additionalplugins /data/plugins/")"
+  [ "$result" == "/opt/tshock/TShock.Server \\
+  -ip 127.0.0.1 \\
+  -port 7777 \\
+  -maxplayers 8 \\
+  -players 8 \\
+  -world /data/worlds/World.wld \\
+  -worldselectpath /data/worlds/ \\
+  -worldname World \\
+  -autocreate 3 \\
+  -config /data/config.txt \\
+  -ignoreversion \\
+  -forceupdate \\
+  -pass 123456 \\
+  -password 123456 \\
+  -motd \"Please don't cut the purple trees!\" \\
+  -autoshutdown \\
+  -secure \\
+  -configpath /data/ \\
+  -logpath /data/logs/ \\
+  -logformat \"yyyy-MM-dd\" \\
+  -logclear \\
+  -dump \\
+  -worldevil random \\
+  -heaptile \\
+  -constileation \\
+  -c \\
+  -difficulty 0 \\
+  -loadlib /data/MyLibrary.dll \\
+  -crashdir /data/crashes/ \\
+  -additionalplugins /data/plugins/" ]
+}

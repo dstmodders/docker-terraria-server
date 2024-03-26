@@ -611,7 +611,7 @@ if [ "$start_server" -eq 1 ]; then
     echo "Terraria version: $TERRARIA_VERSION"
     echo "Working directory: $(pwd)/"
     echo "Configuration: $config"
-    echo "Command: $binary $args"
+    echo "Command: $(print_command "$binary $args")"
 
     if [ -t 0 ]; then
       echo "TTY mode: enabled"

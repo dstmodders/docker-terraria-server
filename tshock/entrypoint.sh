@@ -46,6 +46,16 @@ add_arg() {
   fi
 }
 
+print_parameters() {
+  print_bold '[COMMAND-LINE PARAMETERS]'
+  printf '\n\n'
+  printf 'additionalplugins   %s\n' "$(print_path_value "$additionalplugins")"
+  printf 'configpath          %s\n' "$(print_path_value "$configpath")"
+  printf 'crashdir            %s\n' "$(print_path_value "$crashdir")"
+  printf 'logpath             %s\n' "$(print_path_value "$logpath")"
+  printf 'worldselectpath     %s\n' "$(print_path_value "$worldselectpath")"
+}
+
 while [ $# -gt 0 ]; do
   key="$(trim "$1")"
   value="$(trim "$2")"
@@ -120,6 +130,8 @@ if [ "$start_server" -eq 1 ]; then
       echo "TTY mode: disabled"
     fi
 
+    printf '\n'
+    print_parameters
     echo '---'
   fi
 

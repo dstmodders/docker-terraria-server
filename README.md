@@ -577,6 +577,8 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/te
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>$ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 \
+    -e DEBUG_ENTRYPOINT=0 \
+    -e DISABLE_COLORS=0 \
     -e DISABLE_SUMMARY=0 \
     -e TZ=UTC \
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ \
@@ -596,6 +598,8 @@ $ docker run --rm -it -v "$(pwd):/data/" -p 7777:7777 -p 7878:7878 dstmodders/te
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>> docker run --rm -it -v "%CD%:/data/" -p 7777:7777 -p 7878:7878 ^
+    -e DEBUG_ENTRYPOINT=0 ^
+    -e DISABLE_COLORS=0 ^
     -e DISABLE_SUMMARY=0 ^
     -e TZ=UTC ^
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ ^
@@ -615,6 +619,8 @@ PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 dstmodder
 <details>
 <summary><b>The same, but with default environment variables</b></summary>
 <p><pre>PS:\> docker run --rm -it -v "${PWD}:/data/" -p 7777:7777 -p 7878:7878 `
+    -e DEBUG_ENTRYPOINT=0 `
+    -e DISABLE_COLORS=0 `
     -e DISABLE_SUMMARY=0 `
     -e TZ=UTC `
     -e TSHOCK_ADDITIONALPLUGINS=/data/plugins/ `
@@ -647,6 +653,8 @@ services:
       - './data/:/data/:rw'
     environment:
       # system parameters
+      DEBUG_ENTRYPOINT: 0
+      DISABLE_COLORS: 0
       DISABLE_SUMMARY: 0
       TZ: UTC
       # command-line parameters
@@ -671,8 +679,8 @@ exclusive to the system.
 
 | Name                      | Image                    | Default   | Description                                               |
 | ------------------------- | ------------------------ | --------- | --------------------------------------------------------- |
-| `DEBUG_ENTRYPOINT`        | `official`               | `0`       | Toggles debug messages in the entrypoint                  |
-| `DISABLE_COLORS`          | `official`               | `0`       | Toggles colored output                                    |
+| `DEBUG_ENTRYPOINT`        | `official`<br />`tshock` | `0`       | Toggles debug messages in the entrypoint                  |
+| `DISABLE_COLORS`          | `official`<br />`tshock` | `0`       | Toggles colored output                                    |
 | `DISABLE_SUMMARY`         | `official`<br />`tshock` | `0`       | Toggles configurations summary before starting the server |
 | `TERRARIA_TSHOCK_VERSION` | `tshock`                 | `5.2.0`   | Shows [TShock] version                                    |
 | `TERRARIA_VERSION`        | `official`<br />`tshock` | `1.4.4.9` | Shows [Terraria] version                                  |
